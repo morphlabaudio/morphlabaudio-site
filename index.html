@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morph Lab Audio — Free audio plugins</title>
+<meta name="description" content="Free VST3 and AU plugins for macOS and Windows, built in a mastering studio.">
+<meta property="og:title" content="Morph Lab Audio — Free audio plugins">
+<meta property="og:description" content="Free VST3 and AU plugins for macOS and Windows.">
+<meta property="og:url" content="https://morphlabaudio.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#E7E8E3; --panel:#F4F4F1; --ink:#1D2023; --mute:#62676B; --line:#C9CBC5; --scope:#1F6B66;
+}
+@media (prefers-color-scheme: dark){
+  :root{--wall:#17191B; --panel:#202326; --ink:#E7E8E3; --mute:#9A9FA3; --line:#33373A; --scope:#4FA39C;}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--wall);color:var(--ink);font:400 17px/1.55 "Schibsted Grotesk",system-ui,sans-serif}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--scope);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.logo{font-weight:800;letter-spacing:-.02em;font-size:20px;text-decoration:none}
+.logo span{color:var(--scope)}
+nav ul{display:flex;gap:28px;list-style:none;font-size:15px}
+nav ul a{text-decoration:none;color:var(--mute)}
+nav ul a:hover{color:var(--ink)}
+
+.hero{padding:64px 0 0}
+.hero h1{font-weight:800;font-size:clamp(44px,8.4vw,112px);line-height:.94;letter-spacing:-.045em;max-width:11ch}
+.hero p{font-family:Newsreader,serif;font-size:21px;line-height:1.6;color:var(--mute);max-width:46ch;margin:28px 0 36px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-block;padding:14px 22px;border-radius:999px;font-weight:500;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);background:none;cursor:pointer;font-family:inherit;color:var(--ink)}
+.btn.solid{background:var(--ink);color:var(--wall)}
+.btn:hover{background:var(--scope);border-color:var(--scope);color:#fff}
+.btn.off{opacity:.45;pointer-events:none}
+#scope{display:block;width:100%;height:200px;margin-top:56px}
+
+section{padding:110px 0 0}
+h2{font-size:clamp(30px,4.4vw,46px);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.lede{color:var(--mute);max-width:56ch;margin-bottom:44px}
+
+.rack{border-top:1.5px solid var(--ink)}
+.unit{display:grid;grid-template-columns:1.1fr 2fr auto;gap:24px;align-items:center;padding:30px 0;border-bottom:1px solid var(--line)}
+.unit h3{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.ver{font-size:13px;color:var(--mute)}
+.unit p{color:var(--mute);max-width:48ch}
+.formats{font-size:13px;color:var(--mute);margin-top:6px}
+.dl{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.dl .btn{padding:11px 18px;font-size:14px}
+.alt{font-size:13px;color:var(--mute)}
+.alt a{color:var(--mute)}
+.alt a:hover{color:var(--ink)}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;border-top:1px solid var(--line);padding-top:28px}
+.steps b{display:block;font-weight:500;margin-bottom:6px}
+.steps p{color:var(--mute);font-size:15px}
+.steps code{font-size:13px;background:var(--panel);padding:2px 6px;border-radius:3px}
+
+.panel{background:var(--panel);border-radius:6px;padding:40px}
+.panel .lede{margin-bottom:28px}
+.fb{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fb a{display:block;padding:20px;border:1px solid var(--line);border-radius:4px;text-decoration:none;background:var(--wall)}
+.fb a:hover{border-color:var(--scope)}
+.fb b{display:block;font-weight:500}
+.fb span{font-size:14px;color:var(--mute)}
+.note{font-size:14px;color:var(--mute);margin-top:18px}
+
+.news{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);padding:44px 0}
+.news h2{margin:0;max-width:16ch}
+
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:60px 0 48px;font-size:14px;color:var(--mute)}
+footer a{text-decoration:none;margin-right:20px}
+footer a:hover{color:var(--ink)}
+
+@media (max-width:820px){
+  nav ul{display:none}
+  .unit{grid-template-columns:1fr;gap:10px}
+  .dl{align-items:flex-start}
+  .steps{grid-template-columns:1fr;gap:20px}
+  .fb{grid-template-columns:1fr}
+  .panel{padding:24px}
+  section{padding-top:80px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a class="logo" href="#">Morph Lab <span>Audio</span></a>
+  <ul>
+    <li><a href="#plugins">Plugins</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="#feedback">Report a bug</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <h1>Free plugins from a mastering room.</h1>
+  <p>Built and tested on real masters. VST3 and AU for macOS and Windows. No account, no licence key — download and play.</p>
+  <div class="actions">
+    <a class="btn solid" href="#plugins">Get the plugins</a>
+    <a class="btn" href="#feedback">Report a bug</a>
+  </div>
+  <canvas id="scope" aria-hidden="true"></canvas>
+</header>
+
+<section id="plugins">
+  <h2>Plugins</h2>
+  <p class="lede">All free. Apple Silicon native on Mac. Updates land here automatically — the button always gives you the latest version.</p>
+  <div class="rack" id="rack"></div>
+</section>
+
+<section id="install">
+  <h2>Installing</h2>
+  <p class="lede">The installer puts the plugin in the right folder. Then rescan plugins in your DAW.</p>
+  <div class="steps">
+    <div><b>macOS</b><p>Open the <code>.pkg</code> and follow the steps. VST3 and AU are installed together. Logic users: the plugin appears under Audio Units → Morph Lab Audio.</p></div>
+    <div><b>Windows</b><p>Run the <code>.exe</code>. The VST3 goes to <code>C:\Program Files\Common Files\VST3</code>. If SmartScreen appears, choose “More info” → “Run anyway”.</p></div>
+    <div><b>Not showing up?</b><p>Rescan plugins in your DAW. Still nothing? Send a bug report with your OS and DAW and I’ll help.</p></div>
+  </div>
+</section>
+
+<section id="feedback">
+  <div class="panel">
+    <h2>Found a bug? Have an idea?</h2>
+    <p class="lede">Every report is read and answered. Include your OS and DAW version so I can reproduce it.</p>
+    <div class="fb" id="fb"></div>
+    <p class="note">Reports are filed on GitHub (free account needed). No account? Email <a href="mailto:support@morphlabaudio.com">support@morphlabaudio.com</a>.</p>
+  </div>
+</section>
+
+<section id="news">
+  <div class="news">
+    <h2>New plugins, first.</h2>
+    <a class="btn solid" href="#" id="subscribe">Join the newsletter</a>
+  </div>
+</section>
+
+<footer>
+  <div><a href="https://instagram.com/morphlabaudio">Instagram</a><a href="https://github.com/morphlabaudio">GitHub</a><a href="mailto:hello@morphlabaudio.com">Contact</a></div>
+  <div>© <span id="yr"></span> Morph Lab Audio · Netherlands</div>
+</footer>
+
+</div>
+<script>
+/* ======= EDIT HERE: one entry per plugin =======
+   repo   = GitHub repository name under github.com/morphlabaudio
+   file   = fixed installer base name (no version!) -> <file>-mac.pkg / <file>-win.exe
+   ready  = false shows "Coming soon" and disables downloads */
+const ORG = "morphlabaudio";
+const PLUGINS = [
+  { name:"Transient", repo:"transient", file:"Transient", ready:true,
+    text:"Shape attack and sustain independently, with level-independent detection." },
+  { name:"Drive", repo:"drive", file:"Drive", ready:true,
+    text:"Stereo saturation with subtle left/right differences, the way analog outboard behaves." },
+  { name:"Align", repo:"align", file:"Align", ready:false,
+    text:"Phase alignment between two sources in one click." }
+];
+/* ============================================== */
+
+const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+const isWin = /Win/.test(navigator.platform || navigator.userAgent);
+const url = (p, os) => `https://github.com/${ORG}/${p.repo}/releases/latest/download/${p.file}-${os === "mac" ? "mac.pkg" : "win.exe"}`;
+
+document.getElementById("rack").innerHTML = PLUGINS.map(p => {
+  let dl;
+  if (!p.ready) {
+    dl = `<a class="btn" href="#news">Notify me</a><span class="alt">Coming soon</span>`;
+  } else {
+    const first = isWin ? "win" : "mac";
+    const second = first === "mac" ? "win" : "mac";
+    const label = os => os === "mac" ? "macOS" : "Windows";
+    dl = `<a class="btn solid" href="${url(p, first)}">Download for ${label(first)}</a>
+          <span class="alt">or <a href="${url(p, second)}">${label(second)}</a></span>`;
+  }
+  return `<div class="unit">
+    <div><h3>${p.name}</h3><div class="ver"><a href="https://github.com/${ORG}/${p.repo}/releases" style="color:inherit">Release notes</a></div></div>
+    <div><p>${p.text}</p><div class="formats">VST3 · AU · macOS 11+ · Windows 10+</div></div>
+    <div class="dl">${dl}</div>
+  </div>`;
+}).join("");
+
+const opts = PLUGINS.map(p => `<option value="${p.repo}">${p.name}</option>`).join("");
+document.getElementById("fb").innerHTML = `
+  <a href="#" data-t="bug_report.yml"><b>Report a bug</b><span>Something crashes, sounds wrong or won’t load.</span></a>
+  <a href="#" data-t="feature_request.yml"><b>Suggest an improvement</b><span>A feature, a workflow tweak, a new plugin idea.</span></a>
+  <label style="grid-column:1/-1;font-size:14px;color:var(--mute)">Which plugin?
+    <select id="which" style="margin-left:8px;padding:6px 10px;border-radius:4px;border:1px solid var(--line);background:var(--wall);color:var(--ink);font:inherit">${opts}</select>
+  </label>`;
+document.querySelectorAll("#fb a").forEach(a => a.addEventListener("click", e => {
+  e.preventDefault();
+  const repo = document.getElementById("which").value;
+  window.open(`https://github.com/${ORG}/${repo}/issues/new?template=${a.dataset.t}`, "_blank", "noopener");
+}));
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+/* scope: dynamic mix on the left, controlled on the right */
+const c = document.getElementById("scope"), x = c.getContext("2d");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function size(){ c.width = c.clientWidth * devicePixelRatio; c.height = c.clientHeight * devicePixelRatio; }
+size(); addEventListener("resize", size);
+let t = 0;
+function draw(){
+  const w = c.width, h = c.height, mid = h/2, d = devicePixelRatio, bars = Math.floor(w/(5*d));
+  const ink = css("--ink"), scope = css("--scope");
+  x.clearRect(0,0,w,h);
+  for (let i=0;i<bars;i++){
+    const p = i/bars, ph = i*.21 + t;
+    let a = Math.abs(Math.sin(ph)*.55 + Math.sin(ph*2.7)*.3 + Math.sin(ph*.37)*.4);
+    a = Math.min(1, a*(.55 + .45*Math.abs(Math.sin(i*.05 + t*.3))));
+    const k = Math.min(1, Math.max(0, (p-.35)/.3));
+    const m = Math.tanh(a*2.4)/Math.tanh(2.4)*.92;
+    const v = (a*(1-k) + m*k)*mid*.92;
+    x.fillStyle = k > .5 ? scope : ink;
+    x.globalAlpha = k > .5 ? 1 : .55;
+    x.fillRect(i*5*d, mid-v, 2.5*d, v*2);
+  }
+  x.globalAlpha = 1;
+  if (!reduce){ t += .012; requestAnimationFrame(draw); }
+}
+draw();
+</script>
+</body>
+</html>

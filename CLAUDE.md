@@ -71,3 +71,6 @@ New screenshot: `pdfimages -f 1 -l 1 -png "<manual>.pdf" /tmp/x` → resize to m
 
 ## Checking your work
 Open `index.html` locally (or `python3 -m http.server`), check desktop and ~390px mobile width (no horizontal scroll), then push. After pushing, the Cloudflare Pages check on the commit should be green.
+
+## Private files
+`_redirects` sends `/CLAUDE.md`, `/README.md` and `/.github/*` back to the home page, so they are not readable on the website. If you add other internal files to the repo, add them there too. (The GitHub repo itself is public — it has to be, for the release downloads to work.)

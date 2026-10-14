@@ -1,0 +1,73 @@
+# MorphLab Audio — website (morphlabaudio.com)
+
+Handoff from the Claude cloud session of 2026-10-14. Rey talks to you in Italian; reply in Italian.
+
+## What this is
+Static one-page site where people download Rey's **free** audio plugins (macOS + Windows) and report bugs / suggest features.
+Mastering services and more studio photos come later — not on the site yet.
+
+- **Live:** https://morphlabaudio-site.pages.dev — custom domain `morphlabaudio.com` (domain registered on Cloudflare)
+- **Hosting:** Cloudflare Pages, connected to this GitHub repo. **Every push to `main` deploys automatically** (~1 min). No build step: framework None, output dir `/`.
+- **Repo:** `morphlabaudio/morphlabaudio-site` (GitHub account `morphlabaudio`). The same repo also holds:
+  - **Releases** = the download files
+  - **Issues** = bug reports / feature requests (forms in `.github/ISSUE_TEMPLATE/`)
+- **Contact email:** info@morphlabaudio.com (the only address used on the site)
+
+## Files
+```
+index.html                      the whole site (HTML + CSS + JS, no framework)
+img/hero.jpg                    studio photo, already graded to green duotone (2000px, ~200 KB)
+img/<id>.webp                   plugin UI screenshots (taken from page 1 of each manual)
+.github/ISSUE_TEMPLATE/         bug_report.yml, feature_request.yml, config.yml (field id "plugin" is prefilled by the site)
+README.md                       short publishing notes
+```
+
+## Products — the `PRODUCTS` list at the top of the `<script>` in index.html
+| id | name | version | group |
+|---|---|---|---|
+| morphclipper | MorphClipper | 3.2 | plugins |
+| morphlator | MorPhlator | 2.2 | plugins |
+| morphtransient | MorphTransient | 2.4 | plugins |
+| morphdynamic | MorphDynamic MB Transient | 2.6 | plugins |
+| morphase | MorPhase | 2.1 | plugins |
+| morphalign | MorPhalign | 3.1 | plugins |
+| rx92 | RX92 | 2.0 | plugins |
+| morphcontrolxl | MorphControl XL | 1.2 | tools (needs Novation Launch Control XL) |
+
+All are free. Each entry has `id, file, name, version, group, tag, text` (+ optional `formats`).
+
+## Download URLs (do not break)
+`https://github.com/morphlabaudio/morphlabaudio-site/releases/download/<id>-v<version>/<file>-{mac.dmg|win.zip|manual.pdf}`
+All 8 releases are published with 3 assets each. Buttons show the visitor's OS first (Windows if UA says Windows, else macOS).
+
+### Publishing a new plugin version
+1. Build the distro as usual (DMG in `Vst Developer/<Plugin>_vX/…OSX.dmg`, zip in `Vst Windows/<Plugin> vX/…WIN.zip`).
+2. `gh release create <id>-v<ver> <file>-mac.dmg <file>-win.zip <file>-manual.pdf --repo morphlabaudio/morphlabaudio-site --target main --title "<Name> v<ver>"`
+   (copy/rename the files to the fixed names first — see `../publish_releases.sh`, which does exactly this for the current lineup and skips existing tags; update its LIST for new versions).
+3. Bump `version` in `PRODUCTS`, commit, push.
+New screenshot: `pdfimages -f 1 -l 1 -png "<manual>.pdf" /tmp/x` → resize to max 1200px → `img/<id>.webp` (quality ~82).
+
+## Design system (from Rey's logo mockup "05k — Con griglia tecnica e LAB verde")
+- Colours: bg `#141416`, panel `#1B1B1E`, text `#EDEDEA`, muted `#8A8A8F`, lines `#3A3A3F`, **green `#5BD15B`**. Black / green / white only. Dark-only site.
+- Fonts: **Unbounded** (300/500/900) for headings, labels, buttons; Schibsted Grotesk for body text.
+- Logo/wordmark: "MORPH" solid white, "LAB" outlined in green (`-webkit-text-stroke`), white dot after it. Thin strips above/below with letter-spaced small caps (MORPHLAB / ML—01, AUDIO PLUGINS / VST3 · AU).
+- Hero: full-screen studio photo + 80px technical grid + dark gradients (left side darker for the wordmark). Rey approved the current brightness ("un pelo più luminoso" already applied).
+- Sections start with a strip "01 — Plugins", "02 — Tools", "03 — Install", "04 — Feedback"; H2 has one word outlined in green.
+- Buttons: pill, Unbounded uppercase, primary = green with black text.
+
+## Known facts / caveats
+- Mac builds are **ad-hoc signed, not notarized** → install section tells users System Settings → Privacy & Security → "Open Anyway". Apple Developer account ($99/yr) would remove this — not done yet.
+- Windows: Inno Setup installer inside the zip; SmartScreen warning is expected.
+- "64-bit" for Windows VST3 is stated on the site but was not verified on the actual builds.
+- Newsletter button is a placeholder `mailto:info@morphlabaudio.com?subject=Newsletter` — no newsletter tool chosen yet.
+- Instagram link `instagram.com/morphlabaudio` — account may not exist yet.
+
+## Next ideas (not started)
+- Per-plugin pages with more screenshots and before/after audio examples
+- Newsletter tool (e.g. Buttondown/Kit) to replace the mailto
+- Instagram setup; later the mastering services section and studio photos
+- Cloudflare Email Routing check for info@
+- Apple notarization
+
+## Checking your work
+Open `index.html` locally (or `python3 -m http.server`), check desktop and ~390px mobile width (no horizontal scroll), then push. After pushing, the Cloudflare Pages check on the commit should be green.

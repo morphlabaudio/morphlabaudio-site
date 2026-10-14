@@ -1,0 +1,66 @@
+name: Bug report
+description: Something crashes, sounds wrong or won't load
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time! The more detail, the faster I can fix it.
+  - type: input
+    id: plugin
+    attributes:
+      label: Plugin
+      placeholder: e.g. MorphClipper
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version
+      placeholder: e.g. 1.0.0 (shown in the plugin window)
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS (Apple Silicon)
+        - macOS (Intel)
+        - Windows 11
+        - Windows 10
+    validations:
+      required: true
+  - type: input
+    id: daw
+    attributes:
+      label: DAW and version
+      placeholder: e.g. Ableton Live 12.1, Logic Pro 11, Reaper 7
+    validations:
+      required: true
+  - type: dropdown
+    id: format
+    attributes:
+      label: Plugin format
+      options: [VST3, AU, Standalone app]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Load the plugin on a drum bus
+        2. Set Attack to +10
+        3. ...
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots, audio or crash log
+      description: Drag files here. On Mac, crash logs are in Console → Crash Reports.

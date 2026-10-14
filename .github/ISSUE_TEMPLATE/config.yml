@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: No GitHub account? Email support
+    url: mailto:support@morphlabaudio.com
+    about: Send your report by email instead.
+  - name: Download the latest version
+    url: https://morphlabaudio.com
+    about: Make sure you're on the latest release before reporting.

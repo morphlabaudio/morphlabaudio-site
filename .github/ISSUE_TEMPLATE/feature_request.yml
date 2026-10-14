@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest an improvement or a new idea
+labels: ["enhancement"]
+body:
+  - type: input
+    id: plugin
+    attributes:
+      label: Plugin
+      placeholder: e.g. MorphClipper
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: Describe the feature or change.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why would it help you?
+      description: The situation or workflow where you'd use it.
+  - type: input
+    id: daw
+    attributes:
+      label: DAW you use (optional)

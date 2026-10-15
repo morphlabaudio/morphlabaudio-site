@@ -61,6 +61,7 @@ New screenshot: pdfimages is not installed; use pypdf (`PdfReader(pdf).pages[0].
 - Windows: Inno Setup installer inside the zip; SmartScreen warning is expected.
 - "64-bit" for Windows VST3 is stated on the site but was not verified on the actual builds.
 - Newsletter button is a placeholder `mailto:info@morphlabaudio.com?subject=Newsletter` — no newsletter tool chosen yet.
+- Donations: Ko-fi `ko-fi.com/morphlabaudio` (const `KOFI` in the script) — section "05 — Support" at the bottom, "Donate" in the top nav, "Support" in the footer, and a popup after the visitor's first installer download (once per visitor, localStorage key `ml-tip-shown`). Plain link, NOT Ko-fi's widget script. PayPal button postponed by Rey (2026-10-15).
 - Instagram link is Rey's own account `instagram.com/morpheus_909` (2026-10-15).
 
 ## Next ideas (not started)

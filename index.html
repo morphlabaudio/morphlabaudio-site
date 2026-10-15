@@ -115,8 +115,27 @@ h2 .o{color:transparent;-webkit-text-stroke:1.5px var(--green)}
 .news{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px 0}
 .news h2{margin:0;max-width:14ch}
 
-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:60px 0 48px}
-footer a{text-decoration:none;margin-right:24px}
+.support{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
+.support .lede{margin:0}
+
+/* thank-you popup after the first download */
+.tip{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:rgba(20,20,22,.45);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;transition:opacity .25s}
+.tip.on{opacity:1}
+.tip .box{position:relative;max-width:460px;width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:40px 32px 32px;
+  transform:translateY(8px);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.tip.on .box{transform:none}
+.tip h3{font:900 26px/1.1 var(--disp);letter-spacing:-.01em;margin:14px 0 14px}
+.tip h3 .o{color:transparent;-webkit-text-stroke:1.2px var(--green)}
+.tip p{color:var(--mute);margin-bottom:26px}
+.tip .actions{align-items:center}
+.tip .later{background:none;border:0;color:var(--mute);font:inherit;font-size:14px;cursor:pointer;text-decoration:underline;padding:8px}
+.tip .later:hover{color:var(--green)}
+.tip .lb-close{position:absolute;top:12px;right:12px;width:34px;height:34px;font-size:19px}
+
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:60px 0 48px;line-height:1.6}
+footer div:first-child{display:flex;flex-wrap:wrap;gap:12px 24px}
+footer a{text-decoration:none}
 footer a:hover{color:var(--green)}
 
 @media (max-width:860px){
@@ -140,7 +159,7 @@ footer a:hover{color:var(--green)}
   <div class="wrap">
     <div class="strip label">
       <a class="brand" href="#">MorphLab</a>
-      <nav><a href="#plugins">Plugins</a><a href="#tools">Tools</a><a href="#install">Install</a><a href="#feedback">Bugs</a></nav>
+      <nav><a href="#plugins">Plugins</a><a href="#tools">Tools</a><a href="#install">Install</a><a href="#feedback">Bugs</a><a href="#support">Donate</a></nav>
       <span>ML—01</span>
     </div>
     <div>
@@ -209,8 +228,19 @@ footer a:hover{color:var(--green)}
   </div>
 </section>
 
+<section id="support">
+  <div class="shead label"><span>05 — Support</span><span>Ko-fi</span></div>
+  <div class="support">
+    <div>
+      <h2>Donate to keep it <span class="o">free</span></h2>
+      <p class="lede">All MorphLab plugins are free. Donations help cover development and distribution costs.</p>
+    </div>
+    <a class="btn solid kofi" href="https://ko-fi.com/morphlabaudio" target="_blank" rel="noopener">Support on Ko-fi</a>
+  </div>
+</section>
+
 <footer class="label">
-  <div><a href="https://www.instagram.com/morpheus_909" target="_blank" rel="noopener">Instagram</a><a href="https://github.com/morphlabaudio" target="_blank" rel="noopener">GitHub</a><a href="mailto:info@morphlabaudio.com">Contact</a></div>
+  <div><a href="https://www.instagram.com/morpheus_909" target="_blank" rel="noopener">Instagram</a><a href="https://github.com/morphlabaudio" target="_blank" rel="noopener">GitHub</a><a href="mailto:info@morphlabaudio.com">Contact</a><a href="https://ko-fi.com/morphlabaudio" target="_blank" rel="noopener">Support</a></div>
   <div>© <span id="yr"></span> MorphLab Audio · Netherlands</div>
 </footer>
 
@@ -222,6 +252,7 @@ footer a:hover{color:var(--green)}
    2. attach  <file>-mac.dmg  <file>-win.zip  <file>-manual.pdf
    3. change "version" below and push.                                   */
 const REPO = "morphlabaudio/morphlabaudio-site";
+const KOFI = "https://ko-fi.com/morphlabaudio";
 const PRODUCTS = [
   { id:"morphclipper", file:"MorphClipper", name:"MorphClipper", version:"3.2", group:"plugins",
     tag:"Mastering clipper",
@@ -267,8 +298,8 @@ function card(p){
     <p>${p.text}</p>
     <div class="formats">${p.formats || "macOS 11+ · AU + VST3 &nbsp;|&nbsp; Windows 10+ · VST3"}</div>
     <div class="dl">
-      <a class="btn solid" href="${asset(p, ext(first))}">Download for ${label(first)}</a>
-      <span class="alt">or <a href="${asset(p, ext(second))}">${label(second)}</a> · <a href="${asset(p, "manual.pdf")}">Manual</a> · <a href="https://github.com/${REPO}/releases/tag/${tagOf(p)}">Notes</a></span>
+      <a class="btn solid" data-dl="${p.name}" href="${asset(p, ext(first))}">Download for ${label(first)}</a>
+      <span class="alt">or <a data-dl="${p.name}" href="${asset(p, ext(second))}">${label(second)}</a> · <a href="${asset(p, "manual.pdf")}">Manual</a> · <a href="https://github.com/${REPO}/releases/tag/${tagOf(p)}">Notes</a></span>
     </div>
   </article>`;
 }
@@ -338,7 +369,47 @@ document.querySelectorAll(".shot").forEach(s => {
   s.addEventListener("click", () => openShot(s));
   s.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openShot(s); } });
 });
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeShot(); });
+// Ko-fi popup: once per visitor, after the first installer download.
+// The download itself is never blocked; storage can throw (private mode), then it just shows again next visit.
+const TIP_KEY = "ml-tip-shown";
+const tipSeen = () => { try { return localStorage.getItem(TIP_KEY) === "1"; } catch { return false; } };
+let tip = null, tipFrom = null;
+function closeTip(){
+  if (!tip) return;
+  const el = tip; tip = null;
+  el.classList.remove("on");
+  document.body.style.overflow = "";
+  setTimeout(() => el.remove(), 250);
+  tipFrom && tipFrom.focus();
+}
+function openTip(name, from){
+  try { localStorage.setItem(TIP_KEY, "1"); } catch {}
+  tipFrom = from;
+  tip = document.createElement("div");
+  tip.className = "tip";
+  tip.setAttribute("role", "dialog");
+  tip.setAttribute("aria-modal", "true");
+  tip.setAttribute("aria-labelledby", "tip-h");
+  tip.innerHTML = `<div class="box">
+    <button class="lb-close" aria-label="Close">×</button>
+    <div class="label">Download started</div>
+    <h3 id="tip-h">Enjoy <span class="o">${name}</span></h3>
+    <p>All MorphLab plugins are free. If it’s useful, consider supporting the project — donations help cover development and distribution costs.</p>
+    <div class="actions"><a class="btn solid" href="${KOFI}" target="_blank" rel="noopener">Support on Ko-fi</a><button class="later">Maybe later</button></div>
+  </div>`;
+  tip.addEventListener("click", e => { if (e.target === tip) closeTip(); });
+  tip.querySelector(".lb-close").addEventListener("click", closeTip);
+  tip.querySelector(".later").addEventListener("click", closeTip);
+  tip.querySelector(".btn").addEventListener("click", () => setTimeout(closeTip, 300));
+  document.body.appendChild(tip);
+  document.body.style.overflow = "hidden";
+  requestAnimationFrame(() => tip && tip.classList.add("on"));
+  tip.querySelector(".btn").focus();
+}
+document.querySelectorAll("[data-dl]").forEach(a => a.addEventListener("click", () => {
+  if (!tipSeen()) setTimeout(() => openTip(a.dataset.dl, a), 600);
+}));
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeTip(); closeShot(); } });
 
 </script>
 </body>

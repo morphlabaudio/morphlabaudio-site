@@ -292,7 +292,7 @@ const ext = os => os === "mac" ? "mac.dmg" : "win.zip";
 function card(p){
   const first = isWin ? "win" : "mac", second = first === "mac" ? "win" : "mac";
   return `<article class="card">
-    <div class="shot" data-id="${p.id}" data-name="${p.name}" role="button" tabindex="0" aria-label="View ${p.name} at full size"><img src="img/${p.id}.webp" alt="${p.name} interface" loading="lazy"></div>
+    <div class="shot" data-id="${p.id}" data-name="${p.name}" data-ver="${p.version}" role="button" tabindex="0" aria-label="View ${p.name} at full size"><img src="img/${p.id}.webp?v=${p.version}" alt="${p.name} interface" loading="lazy"></div>
     <div class="head"><h3>${p.name}</h3><span class="ver">v${p.version}</span></div>
     <div class="tag">${p.tag}</div>
     <p>${p.text}</p>
@@ -339,7 +339,7 @@ function openShot(shot){
   lb.setAttribute("role", "dialog");
   lb.setAttribute("aria-modal", "true");
   lb.setAttribute("aria-label", `${shot.dataset.name} at full size`);
-  lb.innerHTML = `<button class="lb-close" aria-label="Close">×</button><img src="img/full/${shot.dataset.id}.webp" alt="${shot.dataset.name} interface at full size">`;
+  lb.innerHTML = `<button class="lb-close" aria-label="Close">×</button><img src="img/full/${shot.dataset.id}.webp?v=${shot.dataset.ver}" alt="${shot.dataset.name} interface at full size">`;
   const img = lb.querySelector("img");
   // width only, never width+height: capping both independently squashes the image
   const size = () => {

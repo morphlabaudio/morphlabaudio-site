@@ -45,7 +45,7 @@ All 8 releases are published with 3 assets each. Buttons show the visitor's OS f
 1. Build the distro as usual (DMG in `Vst Developer/<Plugin>_vX/…OSX.dmg`, zip in `Vst Windows/<Plugin> vX/…WIN.zip`).
 2. `gh release create <id>-v<ver> <file>-mac.dmg <file>-win.zip <file>-manual.pdf --repo morphlabaudio/morphlabaudio-site --target main --title "<Name> v<ver>"`
    (copy/rename the files to the fixed names first — see `../publish_releases.sh`, which does exactly this for the current lineup and skips existing tags; update its LIST for new versions).
-3. Bump `version` in `PRODUCTS`, commit, push.
+3. Bump `version` in `PRODUCTS`, commit, push. The card and full-size image URLs carry `?v=<version>`, so a new screenshot reaches browsers that cached the old one (the CDN sends max-age 4h).
 New screenshot: pdfimages is not installed; use pypdf (`PdfReader(pdf).pages[0].images[0].image`) → save lossless webp as `img/full/<id>.webp`, and resized to max 1200px as `img/<id>.webp` (quality ~82).
 
 ## Design system (from Rey's logo mockup "05k — Con griglia tecnica e LAB verde")

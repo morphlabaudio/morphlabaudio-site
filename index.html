@@ -68,6 +68,19 @@ h2 .o{color:transparent;-webkit-text-stroke:1.5px var(--green)}
 .shot{background:var(--shot);border:1px solid var(--line);border-radius:4px;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:16px;transition:border-color .2s}
 .card:hover .shot{border-color:var(--green)}
 .shot img{max-width:100%;max-height:100%;object-fit:contain;display:block;border-radius:2px}
+.shot{cursor:zoom-in}
+
+/* full-size screenshot viewer: the page stays visible, blurred, behind the plugin */
+.lb{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:56px 24px 24px;overflow:auto;
+  background:rgba(20,20,22,.45);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;transition:opacity .25s;cursor:zoom-out}
+.lb.on{opacity:1}
+.lb img{display:block;width:0;height:auto;border-radius:4px;
+  filter:drop-shadow(0 30px 60px rgba(0,0,0,.6));transform:scale(.97);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.lb.on img{transform:none}
+.lb.native{display:block;padding:56px 24px 24px}
+.lb.native img{margin:0 auto}
+.lb-close{position:fixed;top:14px;right:16px;z-index:101;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--ink);background:rgba(20,20,22,.6);color:var(--ink);font:300 22px/1 var(--disp);cursor:pointer}
+.lb-close:hover{border-color:var(--green);color:var(--green)}
 .card .head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:22px}
 .card h3{font:900 24px/1.1 var(--disp);letter-spacing:-.01em}
 .ver{font:300 11px/1 var(--disp);letter-spacing:.2em;color:var(--mute)}
@@ -248,7 +261,7 @@ const ext = os => os === "mac" ? "mac.dmg" : "win.zip";
 function card(p){
   const first = isWin ? "win" : "mac", second = first === "mac" ? "win" : "mac";
   return `<article class="card">
-    <div class="shot"><img src="img/${p.id}.webp" alt="${p.name} interface" loading="lazy"></div>
+    <div class="shot" data-id="${p.id}" data-name="${p.name}" role="button" tabindex="0" aria-label="View ${p.name} at full size"><img src="img/${p.id}.webp" alt="${p.name} interface" loading="lazy"></div>
     <div class="head"><h3>${p.name}</h3><span class="ver">v${p.version}</span></div>
     <div class="tag">${p.tag}</div>
     <p>${p.text}</p>
@@ -275,6 +288,57 @@ document.querySelectorAll("#fb a").forEach(a => a.addEventListener("click", e =>
 }));
 
 document.getElementById("yr").textContent = new Date().getFullYear();
+
+// Full-size viewer. Click the image to toggle between fit-to-screen and 1:1;
+// 1:1 divides by devicePixelRatio because the screenshots are Retina (2x) captures.
+let lb = null, lbFrom = null, lbResize = null;
+function closeShot(){
+  if (!lb) return;
+  const el = lb; lb = null;
+  removeEventListener("resize", lbResize);
+  el.classList.remove("on");
+  document.body.style.overflow = "";
+  setTimeout(() => el.remove(), 250);
+  lbFrom && lbFrom.focus();
+}
+function openShot(shot){
+  lbFrom = shot;
+  lb = document.createElement("div");
+  lb.className = "lb";
+  lb.setAttribute("role", "dialog");
+  lb.setAttribute("aria-modal", "true");
+  lb.setAttribute("aria-label", `${shot.dataset.name} at full size`);
+  lb.innerHTML = `<button class="lb-close" aria-label="Close">×</button><img src="img/full/${shot.dataset.id}.webp" alt="${shot.dataset.name} interface at full size">`;
+  const img = lb.querySelector("img");
+  // width only, never width+height: capping both independently squashes the image
+  const size = () => {
+    if (!lb || !img.naturalWidth) return;
+    const real = img.naturalWidth / (window.devicePixelRatio || 1);
+    const fit = Math.min(real, innerWidth - 48, (innerHeight - 80) * img.naturalWidth / img.naturalHeight);
+    const native = lb.classList.contains("native");
+    img.style.width = (native ? real : fit) + "px";
+    img.style.cursor = fit < real ? (native ? "zoom-out" : "zoom-in") : "default";
+  };
+  img.addEventListener("load", size);
+  lbResize = size;
+  addEventListener("resize", size);
+  img.addEventListener("click", e => {
+    e.stopPropagation();
+    lb.classList.toggle("native");
+    size();
+  });
+  lb.addEventListener("click", closeShot);
+  document.body.appendChild(lb);
+  document.body.style.overflow = "hidden";
+  if (img.complete) size();
+  requestAnimationFrame(() => lb && lb.classList.add("on"));
+  lb.querySelector(".lb-close").focus();
+}
+document.querySelectorAll(".shot").forEach(s => {
+  s.addEventListener("click", () => openShot(s));
+  s.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openShot(s); } });
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeShot(); });
 
 </script>
 </body>

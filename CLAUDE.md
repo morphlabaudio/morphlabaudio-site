@@ -17,7 +17,8 @@ Mastering services and more studio photos come later — not on the site yet.
 ```
 index.html                      the whole site (HTML + CSS + JS, no framework)
 img/hero.jpg                    studio photo, already graded to green duotone (2000px, ~200 KB)
-img/<id>.webp                   plugin UI screenshots (taken from page 1 of each manual)
+img/<id>.webp                   plugin UI screenshots for the cards (taken from page 1 of each manual, max 1200px)
+img/full/<id>.webp              same screenshot at the manual's full resolution, lossless; opened by clicking a card image
 .github/ISSUE_TEMPLATE/         bug_report.yml, feature_request.yml, config.yml (field id "plugin" is prefilled by the site)
 README.md                       short publishing notes
 ```
@@ -31,7 +32,7 @@ README.md                       short publishing notes
 | morphdynamic | MorphDynamic MB Transient | 2.6 | plugins |
 | morphase | MorPhase | 2.1 | plugins |
 | morphalign | MorPhalign | 3.1 | plugins |
-| rx92 | RX92 | 2.0 | plugins |
+| rx92 | RX92 | 2.1 | plugins |
 | morphcontrolxl | MorphControl XL | 1.2 | tools (needs Novation Launch Control XL) |
 
 All are free. Each entry has `id, file, name, version, group, tag, text` (+ optional `formats`).
@@ -45,7 +46,7 @@ All 8 releases are published with 3 assets each. Buttons show the visitor's OS f
 2. `gh release create <id>-v<ver> <file>-mac.dmg <file>-win.zip <file>-manual.pdf --repo morphlabaudio/morphlabaudio-site --target main --title "<Name> v<ver>"`
    (copy/rename the files to the fixed names first — see `../publish_releases.sh`, which does exactly this for the current lineup and skips existing tags; update its LIST for new versions).
 3. Bump `version` in `PRODUCTS`, commit, push.
-New screenshot: `pdfimages -f 1 -l 1 -png "<manual>.pdf" /tmp/x` → resize to max 1200px → `img/<id>.webp` (quality ~82).
+New screenshot: pdfimages is not installed; use pypdf (`PdfReader(pdf).pages[0].images[0].image`) → save lossless webp as `img/full/<id>.webp`, and resized to max 1200px as `img/<id>.webp` (quality ~82).
 
 ## Design system (from Rey's logo mockup "05k — Con griglia tecnica e LAB verde")
 - Colours: bg `#141416`, panel `#1B1B1E`, text `#EDEDEA`, muted `#8A8A8F`, lines `#3A3A3F`, **green `#5BD15B`**. Black / green / white only. Dark-only site.
@@ -60,7 +61,7 @@ New screenshot: `pdfimages -f 1 -l 1 -png "<manual>.pdf" /tmp/x` → resize to m
 - Windows: Inno Setup installer inside the zip; SmartScreen warning is expected.
 - "64-bit" for Windows VST3 is stated on the site but was not verified on the actual builds.
 - Newsletter button is a placeholder `mailto:info@morphlabaudio.com?subject=Newsletter` — no newsletter tool chosen yet.
-- Instagram link `instagram.com/morphlabaudio` — account may not exist yet.
+- Instagram link is Rey's own account `instagram.com/morpheus_909` (2026-10-15).
 
 ## Next ideas (not started)
 - Per-plugin pages with more screenshots and before/after audio examples

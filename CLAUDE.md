@@ -29,7 +29,7 @@ README.md                       short publishing notes
 | morphclipper | MorphClipper | 3.2 | plugins |
 | morphlator | MorPhlator | 2.2 | plugins |
 | morphtransient | MorphTransient | 2.4 | plugins |
-| morphdynamic | MorphDynamic MB Transient | 2.6 | plugins |
+| morphdynamic | MorphDynamic MB Transient | 2.7 | plugins |
 | morphase | MorPhase | 2.1 | plugins |
 | morphalign | MorPhalign | 3.1 | plugins |
 | rx92 | RX92 | 2.1 | plugins |

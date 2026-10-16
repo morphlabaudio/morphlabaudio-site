@@ -241,7 +241,7 @@ footer a:hover{color:var(--green)}
 
 <section id="news">
   <div class="news">
-    <h2 data-i18n="news.h">New plugins, <span class="o">first.</span></h2>
+    <h2 data-i18n="news.h">Stay in the <span class="o">loop.</span></h2>
     <a class="btn solid" href="mailto:info@morphlabaudio.com?subject=Newsletter" id="subscribe" data-i18n="news.btn">Join the newsletter</a>
   </div>
 </section>
@@ -250,7 +250,7 @@ footer a:hover{color:var(--green)}
   <div class="shead label"><span data-i18n="s5.label">05 — Support</span><span>Ko-fi</span></div>
   <div class="support">
     <div>
-      <h2 data-i18n="s5.h">Donate to keep it <span class="o">free</span></h2>
+      <h2 data-i18n="s5.h">Donate to keep <span class="o">MorphLab</span> alive</h2>
       <p class="lede" data-i18n="s5.lede">All MorphLab plugins are free. Donations help cover development and distribution costs.</p>
     </div>
     <a class="btn solid kofi" href="https://ko-fi.com/morphlabaudio" target="_blank" rel="noopener" data-i18n="kofi.btn">Support on Ko-fi</a>
@@ -292,7 +292,7 @@ const PRODUCTS = [
     text:"Aligns one track to another through the sidechain, so kick and bass sum with the least cancellation. Four engines — Rotate, Multiband, Match and Match LF — on one big knob." },
   { id:"rx92", file:"RX92", name:"RX92", version:"2.1", group:"plugins",
     tag:"DJ channel strip",
-    text:"A club-style channel strip for live sets: 3-band EQ with kill, two series filters with a tempo-synced LFO and three effect slots. Zero latency, every control mappable to your controller." },
+    text:"A channel strip modelled on the famous club mixer, built for live sets: 3-band EQ with kill, two series filters with a tempo-synced LFO and three effect slots inspired by the most-used DJ mixers. Zero latency, every parameter mappable to your MIDI controller." },
   { id:"morphcontrolxl", file:"MorphControl-XL", name:"MorphControl XL", version:"1.2", group:"tools",
     tag:"Step sequencer for Launch Control XL",
     text:"A 16-step, 909-style drum sequencer played from a Novation Launch Control XL. Eight instruments, accents, and a guided LEARN that maps any controller layout. Standalone app and plugin.",
@@ -383,8 +383,8 @@ const I18N = {
     "fb.bug":"Meld een bug", "fb.bugText":"Iets crasht, klinkt verkeerd of laadt niet.",
     "fb.idea":"Stel een verbetering voor", "fb.ideaText":"Een functie, een aanpassing in de workflow, een idee voor een nieuwe plug-in.",
     "fb.which":"Welke plug-in?",
-    "news.h":'Nieuwe plug-ins, <span class="o">als eerste.</span>', "news.btn":"Aanmelden voor de nieuwsbrief",
-    "s5.label":"05 — Steun", "s5.h":'Doneer, zodat ze <span class="o">gratis</span> blijven',
+    "news.h":'Blijf op de <span class="o">hoogte.</span>', "news.btn":"Aanmelden voor de nieuwsbrief",
+    "s5.label":"05 — Steun", "s5.h":'Doneer en houd <span class="o">MorphLab</span> in leven',
     "s5.lede":"Alle MorphLab-plug-ins zijn gratis. Donaties helpen de kosten van ontwikkeling en distributie te dekken.",
     "kofi.btn":"Steun via Ko-fi",
     "foot.contact":"Contact", "foot.support":"Steun", "foot.country":"Nederland",
@@ -405,7 +405,7 @@ const I18N = {
     "morphalign.tag":"Fase-uitlijning via sidechain",
     "morphalign.text":"Lijnt het ene spoor uit op het andere via de sidechain, zodat kick en bas optellen met zo min mogelijk uitdoving. Vier engines — Rotate, Multiband, Match en Match LF — op één grote knop.",
     "rx92.tag":"DJ-kanaalstrip",
-    "rx92.text":"Een kanaalstrip in clubstijl voor livesets: 3-bands EQ met kill, twee filters in serie met een tempogesynchroniseerde LFO en drie effectslots. Nul latentie, elke regelaar toe te wijzen aan je controller.",
+    "rx92.text":"Een kanaalstrip naar het voorbeeld van de beroemde clubmixer, gemaakt voor livesets: 3-bands EQ met kill, twee filters in serie met een tempogesynchroniseerde LFO en drie effectslots geïnspireerd op de meestgebruikte DJ-mixers. Nul latentie, elke parameter toe te wijzen aan je MIDI-controller.",
     "morphcontrolxl.tag":"Stepsequencer voor Launch Control XL",
     "morphcontrolxl.text":"Een 16-staps drumsequencer in 909-stijl, bespeeld vanaf een Novation Launch Control XL. Acht instrumenten, accenten en een begeleide LEARN die elke controllerindeling mapt. Standalone app en plug-in.",
     "morphcontrolxl.formats":"Standalone + AU + VST3 · Vereist Novation Launch Control XL"
@@ -434,8 +434,8 @@ const I18N = {
     "fb.bug":"Signaler un bug", "fb.bugText":"Un plantage, un son anormal ou un plug-in qui ne se charge pas.",
     "fb.idea":"Proposer une amélioration", "fb.ideaText":"Une fonction, un ajustement du workflow, une idée de nouveau plug-in.",
     "fb.which":"Quel plug-in&nbsp;?",
-    "news.h":'Nouveaux plug-ins, <span class="o">en avant-première.</span>', "news.btn":"S’inscrire à la newsletter",
-    "s5.label":"05 — Soutien", "s5.h":'Un don pour qu’ils restent <span class="o">gratuits</span>',
+    "news.h":'Restez <span class="o">branchés.</span>', "news.btn":"S’inscrire à la newsletter",
+    "s5.label":"05 — Soutien", "s5.h":'Faites un don pour faire vivre <span class="o">MorphLab</span>',
     "s5.lede":"Tous les plug-ins MorphLab sont gratuits. Les dons aident à couvrir les frais de développement et de distribution.",
     "kofi.btn":"Soutenir sur Ko-fi",
     "foot.contact":"Contact", "foot.support":"Soutenir", "foot.country":"Pays-Bas",
@@ -456,7 +456,7 @@ const I18N = {
     "morphalign.tag":"Alignement de phase par sidechain",
     "morphalign.text":"Aligne une piste sur une autre via le sidechain, pour que kick et basse s’additionnent avec un minimum d’annulation. Quatre moteurs — Rotate, Multiband, Match et Match LF — sur un seul gros bouton.",
     "rx92.tag":"Tranche de console DJ",
-    "rx92.text":"Une tranche de console façon club pour le live&nbsp;: EQ 3 bandes avec kill, deux filtres en série avec un LFO synchronisé au tempo et trois slots d’effets. Latence nulle, chaque contrôle assignable à votre contrôleur.",
+    "rx92.text":"Une tranche de console inspirée de la célèbre table de mixage de club, pensée pour le live&nbsp;: EQ 3 bandes avec kill, deux filtres en série avec un LFO synchronisé au tempo et trois slots d’effets inspirés des tables DJ les plus utilisées. Latence nulle, chaque paramètre assignable à votre contrôleur MIDI.",
     "morphcontrolxl.tag":"Séquenceur pas à pas pour Launch Control XL",
     "morphcontrolxl.text":"Un séquenceur de batterie 16 pas façon 909, joué depuis un Novation Launch Control XL. Huit instruments, des accents et un LEARN guidé qui s’adapte à n’importe quelle disposition du contrôleur. Application autonome et plug-in.",
     "morphcontrolxl.formats":"Autonome + AU + VST3 · Nécessite un Novation Launch Control XL"

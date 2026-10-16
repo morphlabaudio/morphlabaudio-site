@@ -124,7 +124,12 @@ h2 .o{color:transparent;-webkit-text-stroke:1.5px var(--green)}
 .sub-msg{font-size:14px;margin-top:12px;color:var(--green)}
 .sub-msg:empty{display:none}
 .sub-msg.err{color:var(--ink)}
+.sub-ok{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--mute);margin-top:14px;cursor:pointer}
+.sub-ok input{accent-color:var(--green);width:16px;height:16px;margin-top:3px;flex:none}
 .sub-note{font-size:13px;color:var(--mute);margin-top:12px}
+.sub-note summary{cursor:pointer;text-decoration:underline;width:max-content}
+.sub-note summary:hover{color:var(--green)}
+.sub-note p{margin-top:8px;max-width:60ch}
 
 .support{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
 .support .lede{margin:0}
@@ -260,8 +265,9 @@ footer a:hover{color:var(--green)}
       </div>
       <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <input type="hidden" name="fields[language]" value="en">
+      <label class="sub-ok"><input type="checkbox" required><span data-i18n="news.consent">I agree to receive the MorphLab newsletter by email. I can unsubscribe at any time.</span></label>
       <p class="sub-msg" role="status" aria-live="polite"></p>
-      <p class="sub-note" data-i18n="news.privacy">Double opt-in, no spam, unsubscribe in one click. Your address is stored by Kit and used only for this newsletter.</p>
+      <details class="sub-note"><summary data-i18n="news.privacyTitle">How we use your email</summary><p data-i18n="news.privacy">MorphLab Audio (Netherlands, <a href="mailto:info@morphlabaudio.com">info@morphlabaudio.com</a>) uses your email address only to send you this newsletter. It is never sold or shared, and it is kept until you unsubscribe. Addresses are stored with Google Forms and with our newsletter service, Kit; both may keep data in the USA. Every newsletter has an unsubscribe link. To see, correct or delete your data, write to info@morphlabaudio.com. You can also file a complaint with the Dutch data protection authority (Autoriteit Persoonsgegevens).</p></details>
     </form>
   </div>
 </section>
@@ -291,7 +297,10 @@ footer a:hover{color:var(--green)}
    3. change "version" below and push.                                   */
 const REPO = "morphlabaudio/morphlabaudio-site";
 const KOFI = "https://ko-fi.com/morphlabaudio";
+// Newsletter sign-ups. Until Kit is set up they go to a Google Form (responses land in a Google Sheet);
+// once KIT_FORM is filled in, Kit takes over and the Google Form is no longer used.
 const KIT_FORM = "";  // Kit form ID (number in the form's URL in the Kit dashboard)
+const GFORM = { id:"", email:"", lang:"", consent:"" };  // form id (…/forms/d/e/<id>/viewform) + entry.NNN of each question
 const PRODUCTS = [
   { id:"morphclipper", file:"MorphClipper", name:"MorphClipper", version:"3.2", group:"plugins",
     tag:"Mastering clipper",
@@ -354,7 +363,10 @@ const I18N = {
     "fb.idea":"Suggerisci un miglioramento", "fb.ideaText":"Una funzione, un ritocco al flusso di lavoro, l’idea per un nuovo plugin.",
     "fb.which":"Quale plugin?",
     "news.h":'Rimani sul <span class="o">pezzo.</span>', "news.sub":"Iscriviti", "news.ph":"Indirizzo email",
-    "news.privacy":"Doppia conferma, niente spam, ti cancelli con un clic. L’indirizzo è conservato da Kit e usato solo per questa newsletter.",
+    "news.consent":"Accetto di ricevere la newsletter di MorphLab via email. Posso cancellarmi in qualsiasi momento.",
+    "news.privacyTitle":"Come usiamo la tua email",
+    "news.privacy":'MorphLab Audio (Paesi Bassi, <a href="mailto:info@morphlabaudio.com">info@morphlabaudio.com</a>) usa il tuo indirizzo email solo per mandarti questa newsletter. Non viene mai venduto né condiviso, e viene conservato finché non ti cancelli. Gli indirizzi sono conservati su Google Forms e sul nostro servizio di newsletter, Kit; entrambi possono tenere i dati negli USA. Ogni newsletter ha un link per cancellarsi. Per vedere, correggere o cancellare i tuoi dati scrivi a info@morphlabaudio.com. Puoi anche presentare un reclamo all’autorità olandese per la protezione dei dati (Autoriteit Persoonsgegevens).',
+    "news.thanks":"Grazie, sei nella lista. Le newsletter arrivano da info@morphlabaudio.com.", "news.needConsent":"Spunta la casella per confermare che vuoi la newsletter.",
     "news.ok":"Quasi fatto: controlla la posta e conferma l’iscrizione.", "news.invalid":"Inserisci un indirizzo email valido.",
     "news.fail":"Qualcosa non ha funzionato. Riprova tra poco o scrivi a info@morphlabaudio.com.",
     "s5.label":"05 — Sostegno", "s5.h":'Dona per <span class="o">sostenerci</span>',
@@ -408,7 +420,10 @@ const I18N = {
     "fb.idea":"Stel een verbetering voor", "fb.ideaText":"Een functie, een aanpassing in de workflow, een idee voor een nieuwe plug-in.",
     "fb.which":"Welke plug-in?",
     "news.h":'Blijf op de <span class="o">hoogte.</span>', "news.sub":"Aanmelden", "news.ph":"E-mailadres",
-    "news.privacy":"Dubbele bevestiging, geen spam, met één klik afmelden. Je adres wordt bewaard door Kit en alleen voor deze nieuwsbrief gebruikt.",
+    "news.consent":"Ik wil de nieuwsbrief van MorphLab per e-mail ontvangen. Ik kan me op elk moment afmelden.",
+    "news.privacyTitle":"Hoe we je e-mailadres gebruiken",
+    "news.privacy":'MorphLab Audio (Nederland, <a href="mailto:info@morphlabaudio.com">info@morphlabaudio.com</a>) gebruikt je e-mailadres alleen om je deze nieuwsbrief te sturen. Het wordt nooit verkocht of gedeeld en bewaard tot je je afmeldt. Adressen worden opgeslagen bij Google Forms en bij onze nieuwsbriefdienst Kit; beide kunnen gegevens in de VS bewaren. Elke nieuwsbrief bevat een afmeldlink. Wil je je gegevens inzien, corrigeren of laten verwijderen, mail dan naar info@morphlabaudio.com. Je kunt ook een klacht indienen bij de Autoriteit Persoonsgegevens.',
+    "news.thanks":"Bedankt, je staat op de lijst. Nieuwsbrieven komen van info@morphlabaudio.com.", "news.needConsent":"Vink het vakje aan om te bevestigen dat je de nieuwsbrief wilt.",
     "news.ok":"Bijna klaar — check je inbox en bevestig je aanmelding.", "news.invalid":"Vul een geldig e-mailadres in.",
     "news.fail":"Er ging iets mis. Probeer het zo opnieuw of mail naar info@morphlabaudio.com.",
     "s5.label":"05 — Steun", "s5.h":'Doneer om <span class="o">ons te steunen</span>',
@@ -462,7 +477,10 @@ const I18N = {
     "fb.idea":"Proposer une amélioration", "fb.ideaText":"Une fonction, un ajustement du workflow, une idée de nouveau plug-in.",
     "fb.which":"Quel plug-in&nbsp;?",
     "news.h":'Restez <span class="o">branchés.</span>', "news.sub":"S’inscrire", "news.ph":"Adresse e-mail",
-    "news.privacy":"Double confirmation, pas de spam, désinscription en un clic. Votre adresse est conservée par Kit et utilisée uniquement pour cette newsletter.",
+    "news.consent":"J’accepte de recevoir la newsletter de MorphLab par e-mail. Je peux me désinscrire à tout moment.",
+    "news.privacyTitle":"Utilisation de votre adresse e-mail",
+    "news.privacy":'MorphLab Audio (Pays-Bas, <a href="mailto:info@morphlabaudio.com">info@morphlabaudio.com</a>) utilise votre adresse e-mail uniquement pour vous envoyer cette newsletter. Elle n’est jamais vendue ni partagée, et elle est conservée jusqu’à votre désinscription. Les adresses sont stockées chez Google Forms et chez notre service de newsletter, Kit&nbsp;; tous deux peuvent conserver les données aux États-Unis. Chaque newsletter contient un lien de désinscription. Pour consulter, corriger ou supprimer vos données, écrivez à info@morphlabaudio.com. Vous pouvez aussi déposer une plainte auprès de l’autorité néerlandaise de protection des données (Autoriteit Persoonsgegevens).',
+    "news.thanks":"Merci, vous êtes inscrit. Les newsletters viennent de info@morphlabaudio.com.", "news.needConsent":"Cochez la case pour confirmer que vous souhaitez recevoir la newsletter.",
     "news.ok":"Presque terminé — vérifiez votre boîte mail et confirmez votre inscription.", "news.invalid":"Saisissez une adresse e-mail valide.",
     "news.fail":"Une erreur s’est produite. Réessayez dans un instant ou écrivez à info@morphlabaudio.com.",
     "s5.label":"05 — Soutien", "s5.h":'Faites un don pour <span class="o">nous soutenir</span>',
@@ -504,6 +522,7 @@ const EN = {
   "tip.text":"All MorphLab plugins are free. If it’s useful, consider supporting the project — donations help cover development and distribution costs.",
   "tip.later":"Maybe later", "close":"Close", "lang":"Language",
   "news.ph":"Email address",
+  "news.thanks":"Thanks — you’re on the list. Newsletters come from info@morphlabaudio.com.", "news.needConsent":"Please tick the box to confirm you want the newsletter.",
   "news.ok":"Almost done — check your inbox and confirm your subscription.", "news.invalid":"Please enter a valid email address.",
   "news.fail":"Something went wrong. Try again in a moment or email info@morphlabaudio.com."
 };
@@ -634,14 +653,25 @@ sub.addEventListener("submit", async e => {
   const say = (k, err) => { msg.textContent = t(k); msg.classList.toggle("err", !!err); };
   if (sub.querySelector(".hp").value) { say("news.ok"); return; }
   if (!email.checkValidity()) { say("news.invalid", true); email.focus(); return; }
+  if (!sub.querySelector(".sub-ok input").checked) { say("news.needConsent", true); return; }
   btn.disabled = true;
   try {
-    const r = await fetch(sub.action, { method:"POST", headers:{ Accept:"application/json" }, body:new FormData(sub) });
-    if (!r.ok) throw new Error(r.status);
-    say("news.ok");
+    if (KIT_FORM) {
+      const r = await fetch(sub.action, { method:"POST", headers:{ Accept:"application/json" }, body:new FormData(sub) });
+      if (!r.ok) throw new Error(r.status);
+      say("news.ok");
+    } else {
+      // Google Forms gives no CORS response: an opaque reply is the best confirmation available
+      const body = new URLSearchParams({ [GFORM.email]: email.value.trim(), [GFORM.lang]: lang,
+        [GFORM.consent]: `yes — ${new Date().toISOString()} — ${t("news.consent")}` });
+      await fetch(`https://docs.google.com/forms/d/e/${GFORM.id}/formResponse`, { method:"POST", mode:"no-cors", body });
+      say("news.thanks");
+    }
     email.value = "";
+    sub.querySelector(".sub-ok input").checked = false;
   } catch {
-    try { sub.submit(); say("news.ok"); } catch { say("news.fail", true); }
+    if (KIT_FORM) { try { sub.submit(); say("news.ok"); } catch { say("news.fail", true); } }
+    else say("news.fail", true);
   } finally {
     btn.disabled = false;
   }

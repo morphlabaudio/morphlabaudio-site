@@ -133,7 +133,24 @@ h2 .o{color:transparent;-webkit-text-stroke:1.5px var(--green)}
 .tip .later:hover{color:var(--green)}
 .tip .lb-close{position:absolute;top:12px;right:12px;width:34px;height:34px;font-size:19px}
 
-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:60px 0 48px;line-height:1.6}
+/* language picker: flags are inline SVG because Windows renders flag emoji as plain letters */
+.strip .right{display:flex;align-items:center;gap:20px}
+.lang{position:relative;display:inline-block}
+.lang-btn{display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--line);border-radius:999px;padding:6px 10px 6px 8px;color:var(--ink);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;transition:border-color .15s}
+.lang-btn:hover,.lang.open .lang-btn{border-color:var(--green)}
+.lang-btn .chev{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.4;transition:transform .15s}
+.lang.open .chev{transform:rotate(180deg)}
+.flag{width:20px;height:14px;border-radius:2px;flex:none;display:block;box-shadow:0 0 0 1px rgba(237,237,234,.18)}
+.lang-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:50;min-width:180px;list-style:none;background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:6px;
+  box-shadow:0 18px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .15s,transform .15s,visibility .15s}
+.lang.up .lang-menu{top:auto;bottom:calc(100% + 8px);transform:translateY(4px)}
+.lang.open .lang-menu{opacity:1;visibility:visible;transform:none}
+.lang-menu button{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;border-radius:3px;padding:10px;color:var(--ink);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;text-align:left}
+.lang-menu button:hover{background:var(--bg)}
+.lang-menu button[aria-selected="true"]{color:var(--green)}
+.foot-r{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+
+footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding:60px 0 48px;line-height:1.6}
 footer div:first-child{display:flex;flex-wrap:wrap;gap:12px 24px}
 footer a{text-decoration:none}
 footer a:hover{color:var(--green)}
@@ -149,6 +166,7 @@ footer a:hover{color:var(--green)}
   .hero .fade{background-color:rgba(20,20,22,.32)}
   .wordmark .lab{-webkit-text-stroke-width:2px}
 }
+@media (max-width:480px){.btn{white-space:normal;text-align:center;line-height:1.3}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
@@ -159,8 +177,8 @@ footer a:hover{color:var(--green)}
   <div class="wrap">
     <div class="strip label">
       <a class="brand" href="#">MorphLab</a>
-      <nav><a href="#plugins">Plugins</a><a href="#tools">Tools</a><a href="#install">Install</a><a href="#feedback">Bugs</a><a href="#support">Donate</a></nav>
-      <span>ML—01</span>
+      <nav><a href="#plugins" data-i18n="nav.plugins">Plugins</a><a href="#tools" data-i18n="nav.tools">Tools</a><a href="#install" data-i18n="nav.install">Install</a><a href="#feedback" data-i18n="nav.bugs">Bugs</a><a href="#support" data-i18n="nav.donate">Donate</a></nav>
+      <span class="right"><span>ML—01</span><span class="lang" data-lang-picker></span></span>
     </div>
     <div>
       <h1 class="wordmark" aria-label="MorphLab">
@@ -168,80 +186,80 @@ footer a:hover{color:var(--green)}
         <div class="row"><span class="lab">LAB</span><span class="dot"></span></div>
       </h1>
       <div class="pitch">
-        <p>Free plugins from a mastering room. Suitable for production, live performance, mixing or mastering. No account, no license key.</p>
+        <p data-i18n="hero.pitch">Free plugins from a mastering room. Suitable for production, live performance, mixing or mastering. No account, no license key.</p>
         <div class="actions">
-          <a class="btn solid" href="#plugins">Get the plugins</a>
-          <a class="btn" href="#feedback">Report a bug</a>
+          <a class="btn solid" href="#plugins" data-i18n="hero.get">Get the plugins</a>
+          <a class="btn" href="#feedback" data-i18n="hero.report">Report a bug</a>
         </div>
       </div>
     </div>
-    <div class="strip bottom label"><span>Audio plugins</span><span>VST3 · AU</span></div>
+    <div class="strip bottom label"><span data-i18n="hero.audio">Audio plugins</span><span>VST3 · AU</span></div>
   </div>
 </header>
 
 <div class="wrap">
 
 <section id="plugins">
-  <div class="shead label"><span>01 — Plugins</span><span>7 · Free</span></div>
-  <h2>The <span class="o">rack</span></h2>
-  <p class="lede">For macOS (AU + VST3, native on Apple Silicon and Intel) and Windows 10/11 (VST3, 64-bit). Every download includes an installer and the user manual in English and Italian.</p>
+  <div class="shead label"><span data-i18n="s1.label">01 — Plugins</span><span data-i18n="s1.right">7 · Free</span></div>
+  <h2 data-i18n="s1.h">The <span class="o">rack</span></h2>
+  <p class="lede" data-i18n="s1.lede">For macOS (AU + VST3, native on Apple Silicon and Intel) and Windows 10/11 (VST3, 64-bit). Every download includes an installer and the user manual in English and Italian.</p>
   <div class="grid" id="grid-plugins"></div>
 </section>
 
 <section id="tools">
-  <div class="shead label"><span>02 — Tools</span><span>Live · Hardware</span></div>
-  <h2><span class="o">Tools</span></h2>
-  <p class="lede">Utilities for live sets and hardware controllers. Also free.</p>
+  <div class="shead label"><span data-i18n="s2.label">02 — Tools</span><span>Live · Hardware</span></div>
+  <h2 data-i18n="s2.h"><span class="o">Tools</span></h2>
+  <p class="lede" data-i18n="s2.lede">Utilities for live sets and hardware controllers. Also free.</p>
   <div class="grid" id="grid-tools"></div>
 </section>
 <section id="install">
-  <div class="shead label"><span>03 — Install</span><span>macOS · Windows</span></div>
-  <h2>Install<span class="o">ing</span></h2>
-  <p class="lede">The installer puts each format in the right folder. Afterwards, rescan plugins in your DAW.</p>
+  <div class="shead label"><span data-i18n="s3.label">03 — Install</span><span>macOS · Windows</span></div>
+  <h2 data-i18n="s3.h">Install<span class="o">ing</span></h2>
+  <p class="lede" data-i18n="s3.lede">The installer puts each format in the right folder. Afterwards, rescan plugins in your DAW.</p>
   <div class="steps">
     <div><b>macOS</b>
-      <p>Open the <code>.dmg</code> and double-click the <code>.pkg</code> inside. AU and VST3 are installed together.</p>
-      <p>If macOS says it can’t verify the developer: open System Settings → Privacy &amp; Security, scroll down and click “Open Anyway”. You only need to do this once per plugin.</p></div>
+      <p data-i18n="s3.mac1">Open the <code>.dmg</code> and double-click the <code>.pkg</code> inside. AU and VST3 are installed together.</p>
+      <p data-i18n="s3.mac2">If macOS says it can’t verify the developer: open System Settings → Privacy &amp; Security, scroll down and click “Open Anyway”. You only need to do this once per plugin.</p></div>
     <div><b>Windows</b>
-      <p>Unzip the download and run <code>Setup.exe</code>. The VST3 goes to <code>C:\Program Files\Common Files\VST3</code>.</p>
-      <p>If SmartScreen appears, click “More info” → “Run anyway”.</p></div>
-    <div><b>Not showing up?</b>
-      <p>Rescan plugins in your DAW. In Logic, the AU is listed under Audio Units → MorphLab.</p>
-      <p>Still nothing? Send a bug report with your OS and DAW and I’ll help.</p></div>
+      <p data-i18n="s3.win1">Unzip the download and run <code>Setup.exe</code>. The VST3 goes to <code>C:\Program Files\Common Files\VST3</code>.</p>
+      <p data-i18n="s3.win2">If SmartScreen appears, click “More info” → “Run anyway”.</p></div>
+    <div><b data-i18n="s3.miss">Not showing up?</b>
+      <p data-i18n="s3.miss1">Rescan plugins in your DAW. In Logic, the AU is listed under Audio Units → MorphLab.</p>
+      <p data-i18n="s3.miss2">Still nothing? Send a bug report with your OS and DAW and I’ll help.</p></div>
   </div>
 </section>
 
 <section id="feedback">
-  <div class="shead label"><span>04 — Feedback</span><span>Bugs · Ideas</span></div>
+  <div class="shead label"><span data-i18n="s4.label">04 — Feedback</span><span data-i18n="s4.right">Bugs · Ideas</span></div>
   <div class="panel">
-    <h2>Found a bug? Have an idea?</h2>
-    <p class="lede">Every report is read and answered. Include your OS and DAW version so I can reproduce it.</p>
+    <h2 data-i18n="s4.h">Found a bug? Have an idea?</h2>
+    <p class="lede" data-i18n="s4.lede">Every report is read and answered. Include your OS and DAW version so I can reproduce it.</p>
     <div class="fb" id="fb"></div>
-    <p class="note">Reports are filed on GitHub (a free account is needed). No account? Email <a href="mailto:info@morphlabaudio.com">info@morphlabaudio.com</a>.</p>
+    <p class="note" data-i18n="s4.note">Reports are filed on GitHub (a free account is needed). No account? Email <a href="mailto:info@morphlabaudio.com">info@morphlabaudio.com</a>.</p>
   </div>
 </section>
 
 <section id="news">
   <div class="news">
-    <h2>New plugins, <span class="o">first.</span></h2>
-    <a class="btn solid" href="mailto:info@morphlabaudio.com?subject=Newsletter" id="subscribe">Join the newsletter</a>
+    <h2 data-i18n="news.h">New plugins, <span class="o">first.</span></h2>
+    <a class="btn solid" href="mailto:info@morphlabaudio.com?subject=Newsletter" id="subscribe" data-i18n="news.btn">Join the newsletter</a>
   </div>
 </section>
 
 <section id="support">
-  <div class="shead label"><span>05 — Support</span><span>Ko-fi</span></div>
+  <div class="shead label"><span data-i18n="s5.label">05 — Support</span><span>Ko-fi</span></div>
   <div class="support">
     <div>
-      <h2>Donate to keep it <span class="o">free</span></h2>
-      <p class="lede">All MorphLab plugins are free. Donations help cover development and distribution costs.</p>
+      <h2 data-i18n="s5.h">Donate to keep it <span class="o">free</span></h2>
+      <p class="lede" data-i18n="s5.lede">All MorphLab plugins are free. Donations help cover development and distribution costs.</p>
     </div>
-    <a class="btn solid kofi" href="https://ko-fi.com/morphlabaudio" target="_blank" rel="noopener">Support on Ko-fi</a>
+    <a class="btn solid kofi" href="https://ko-fi.com/morphlabaudio" target="_blank" rel="noopener" data-i18n="kofi.btn">Support on Ko-fi</a>
   </div>
 </section>
 
 <footer class="label">
-  <div><a href="https://www.instagram.com/morpheus_909" target="_blank" rel="noopener">Instagram</a><a href="https://github.com/morphlabaudio" target="_blank" rel="noopener">GitHub</a><a href="mailto:info@morphlabaudio.com">Contact</a><a href="https://ko-fi.com/morphlabaudio" target="_blank" rel="noopener">Support</a></div>
-  <div>© <span id="yr"></span> MorphLab Audio · Netherlands</div>
+  <div><a href="https://www.instagram.com/morpheus_909" target="_blank" rel="noopener">Instagram</a><a href="https://github.com/morphlabaudio" target="_blank" rel="noopener">GitHub</a><a href="mailto:info@morphlabaudio.com" data-i18n="foot.contact">Contact</a><a href="https://ko-fi.com/morphlabaudio" target="_blank" rel="noopener" data-i18n="foot.support">Support</a></div>
+  <div class="foot-r"><span>© <span id="yr"></span> MorphLab Audio · <span data-i18n="foot.country">Netherlands</span></span><span class="lang up" data-lang-picker></span></div>
 </footer>
 
 </div>
@@ -280,6 +298,248 @@ const PRODUCTS = [
     text:"A 16-step, 909-style drum sequencer played from a Novation Launch Control XL. Eight instruments, accents, and a guided LEARN that maps any controller layout. Standalone app and plugin.",
     formats:"Standalone + AU + VST3 · Requires Novation Launch Control XL" }
 ];
+/* ================= TRANSLATIONS =================
+   English is the text in the HTML and in PRODUCTS above; these are the other languages.
+   A missing key falls back to English. Product cards use "<id>.tag" and "<id>.text".  */
+const LANGS = [
+  { code:"en", name:"English" },
+  { code:"it", name:"Italiano" },
+  { code:"nl", name:"Nederlands" },
+  { code:"fr", name:"Français" }
+];
+const I18N = {
+  it: {
+    "title":"MorphLab Audio — Plugin audio gratuiti",
+    "nav.plugins":"Plugin", "nav.tools":"Strumenti", "nav.install":"Installazione", "nav.bugs":"Bug", "nav.donate":"Dona",
+    "hero.pitch":"Plugin gratuiti nati in uno studio di mastering. Per produzione, live, mix o mastering. Nessun account, nessuna chiave di licenza.",
+    "hero.get":"Scarica i plugin", "hero.report":"Segnala un bug", "hero.audio":"Plugin audio",
+    "s1.label":"01 — Plugin", "s1.right":"7 · Gratis", "s1.h":'Il <span class="o">rack</span>',
+    "s1.lede":"Per macOS (AU + VST3, nativi su Apple Silicon e Intel) e Windows 10/11 (VST3, 64 bit). Ogni download include l’installer e il manuale utente in inglese e italiano.",
+    "s2.label":"02 — Strumenti", "s2.h":'<span class="o">Strumenti</span>',
+    "s2.lede":"Utility per i live set e i controller hardware. Anche queste gratis.",
+    "s3.label":"03 — Installazione", "s3.h":'Install<span class="o">azione</span>',
+    "s3.lede":"L’installer mette ogni formato nella cartella giusta. Poi rifai la scansione dei plugin nella tua DAW.",
+    "s3.mac1":"Apri il <code>.dmg</code> e fai doppio clic sul <code>.pkg</code> che contiene. AU e VST3 si installano insieme.",
+    "s3.mac2":"Se macOS dice che non può verificare lo sviluppatore: apri Impostazioni di Sistema → Privacy e sicurezza, scorri in basso e clicca “Apri comunque”. Basta farlo una volta per plugin.",
+    "s3.win1":"Estrai lo zip e avvia <code>Setup.exe</code>. Il VST3 va in <code>C:\\Program Files\\Common Files\\VST3</code>.",
+    "s3.win2":"Se compare SmartScreen, clicca “Ulteriori informazioni” → “Esegui comunque”.",
+    "s3.miss":"Non compare?",
+    "s3.miss1":"Rifai la scansione dei plugin nella DAW. In Logic l’AU si trova in Audio Units → MorphLab.",
+    "s3.miss2":"Ancora niente? Manda una segnalazione indicando sistema operativo e DAW e ti aiuto.",
+    "s4.label":"04 — Feedback", "s4.right":"Bug · Idee", "s4.h":"Trovato un bug? Hai un’idea?",
+    "s4.lede":"Ogni segnalazione viene letta e riceve risposta. Indica sistema operativo e versione della DAW, così posso riprodurre il problema.",
+    "s4.note":'Le segnalazioni si fanno su GitHub (serve un account gratuito). Niente account? Scrivi a <a href="mailto:info@morphlabaudio.com">info@morphlabaudio.com</a>.',
+    "fb.bug":"Segnala un bug", "fb.bugText":"Qualcosa va in crash, suona male o non si carica.",
+    "fb.idea":"Suggerisci un miglioramento", "fb.ideaText":"Una funzione, un ritocco al flusso di lavoro, l’idea per un nuovo plugin.",
+    "fb.which":"Quale plugin?",
+    "news.h":'Nuovi plugin, <span class="o">per primi.</span>', "news.btn":"Iscriviti alla newsletter",
+    "s5.label":"05 — Sostegno", "s5.h":'Dona per tenerli <span class="o">gratis</span>',
+    "s5.lede":"Tutti i plugin MorphLab sono gratuiti. Le donazioni aiutano a coprire i costi di sviluppo e distribuzione.",
+    "kofi.btn":"Sostieni su Ko-fi",
+    "foot.contact":"Contatti", "foot.support":"Sostieni", "foot.country":"Paesi Bassi",
+    "card.download":"Scarica per {os}", "card.or":"o", "card.manual":"Manuale", "card.notes":"Note",
+    "card.view":"Apri {name} a grandezza intera", "card.alt":"Interfaccia di {name}",
+    "tip.started":"Download avviato", "tip.enjoy":'Buon lavoro con <span class="o">{name}</span>',
+    "tip.text":"Tutti i plugin MorphLab sono gratuiti. Se ti è utile, valuta di sostenere il progetto: le donazioni aiutano a coprire i costi di sviluppo e distribuzione.",
+    "tip.later":"Magari più tardi", "close":"Chiudi", "lang":"Lingua",
+    "morphclipper.tag":"Clipper da mastering",
+    "morphclipper.text":"Un clipper di livello mastering con stadio di clip in oversampling, ceiling true-peak misurato secondo ITU-R BS.1770, un insert transient/saturazione spostabile e routing Mid/Side o dual-mono. Densità senza schiacciare il mix.",
+    "morphlator.tag":"Exciter armonico multibanda",
+    "morphlator.text":"Aggiunge peso e loudness percepita rimodellando la forma d’onda, non comprimendola. La divisione opzionale in tre bande tiene il basso compatto, e Gain Match ti dà un A/B onesto a pari loudness.",
+    "morphtransient.text":"Due manopole, attack e sustain, guidate da una rilevazione a doppio inviluppo indipendente dal livello: nessuna soglia da inseguire, nessun pumping. Mix parallelo e meter della forma in tempo reale. Latenza zero.",
+    "morphdynamic.tag":"Saturatore multibanda sui transienti",
+    "morphdynamic.text":"Porta il transiente in avanti, in faccia, senza degradare il segnale. Ogni banda reagisce solo ai propri colpi mentre il sustain resta pulito. Cinque tipi di saturazione tra cui Transformer, accensione e solo per banda sullo spettro.",
+    "morphase.tag":"Strumento di fase all-pass",
+    "morphase.text":"Ruota la fase con filtri all-pass del primo o secondo ordine senza toccare l’ampiezza. Allinea kick, layer e registrazioni multi-microfono, e guarda il risultato su una forma d’onda agganciata al beat.",
+    "morphalign.tag":"Allineamento di fase in sidechain",
+    "morphalign.text":"Allinea una traccia a un’altra tramite il sidechain, così kick e basso si sommano con la minima cancellazione. Quattro motori — Rotate, Multiband, Match e Match LF — su un’unica grande manopola.",
+    "rx92.tag":"Channel strip per DJ",
+    "rx92.text":"Una channel strip in stile club per i live set: EQ a 3 bande con kill, due filtri in serie con LFO sincronizzato al tempo e tre slot effetti. Latenza zero, ogni controllo assegnabile al tuo controller.",
+    "morphcontrolxl.tag":"Step sequencer per Launch Control XL",
+    "morphcontrolxl.text":"Un drum sequencer a 16 step in stile 909, suonato da un Novation Launch Control XL. Otto strumenti, accenti e un LEARN guidato che mappa qualsiasi layout del controller. App standalone e plugin.",
+    "morphcontrolxl.formats":"Standalone + AU + VST3 · Richiede Novation Launch Control XL"
+  },
+  nl: {
+    "title":"MorphLab Audio — Gratis audio-plug-ins",
+    "nav.plugins":"Plug-ins", "nav.tools":"Tools", "nav.install":"Installatie", "nav.bugs":"Bugs", "nav.donate":"Doneren",
+    "hero.pitch":"Gratis plug-ins uit een masteringstudio. Voor productie, live optredens, mixen of masteren. Geen account, geen licentiesleutel.",
+    "hero.get":"Download de plug-ins", "hero.report":"Meld een bug", "hero.audio":"Audio-plug-ins",
+    "s1.label":"01 — Plug-ins", "s1.right":"7 · Gratis", "s1.h":'Het <span class="o">rack</span>',
+    "s1.lede":"Voor macOS (AU + VST3, native op Apple Silicon en Intel) en Windows 10/11 (VST3, 64-bit). Elke download bevat een installatieprogramma en de handleiding in het Engels en Italiaans.",
+    "s2.label":"02 — Tools", "s2.h":'<span class="o">Tools</span>',
+    "s2.lede":"Hulpmiddelen voor livesets en hardwarecontrollers. Ook gratis.",
+    "s3.label":"03 — Installatie", "s3.h":'Install<span class="o">atie</span>',
+    "s3.lede":"Het installatieprogramma zet elk formaat in de juiste map. Laat daarna je DAW opnieuw naar plug-ins scannen.",
+    "s3.mac1":"Open de <code>.dmg</code> en dubbelklik op de <code>.pkg</code> erin. AU en VST3 worden samen geïnstalleerd.",
+    "s3.mac2":"Meldt macOS dat de ontwikkelaar niet kan worden geverifieerd? Open Systeeminstellingen → Privacy en beveiliging, scrol omlaag en klik op ‘Open toch’. Dit hoeft maar één keer per plug-in.",
+    "s3.win1":"Pak de download uit en start <code>Setup.exe</code>. De VST3 komt in <code>C:\\Program Files\\Common Files\\VST3</code>.",
+    "s3.win2":"Verschijnt SmartScreen? Klik op ‘Meer informatie’ → ‘Toch uitvoeren’.",
+    "s3.miss":"Niet zichtbaar?",
+    "s3.miss1":"Scan de plug-ins opnieuw in je DAW. In Logic staat de AU onder Audio Units → MorphLab.",
+    "s3.miss2":"Nog steeds niets? Stuur een bugmelding met je besturingssysteem en DAW, dan help ik je.",
+    "s4.label":"04 — Feedback", "s4.right":"Bugs · Ideeën", "s4.h":"Een bug gevonden? Een idee?",
+    "s4.lede":"Elke melding wordt gelezen en beantwoord. Vermeld je besturingssysteem en DAW-versie, zodat ik het probleem kan reproduceren.",
+    "s4.note":'Meldingen gaan via GitHub (een gratis account is nodig). Geen account? Mail naar <a href="mailto:info@morphlabaudio.com">info@morphlabaudio.com</a>.',
+    "fb.bug":"Meld een bug", "fb.bugText":"Iets crasht, klinkt verkeerd of laadt niet.",
+    "fb.idea":"Stel een verbetering voor", "fb.ideaText":"Een functie, een aanpassing in de workflow, een idee voor een nieuwe plug-in.",
+    "fb.which":"Welke plug-in?",
+    "news.h":'Nieuwe plug-ins, <span class="o">als eerste.</span>', "news.btn":"Aanmelden voor de nieuwsbrief",
+    "s5.label":"05 — Steun", "s5.h":'Doneer, zodat ze <span class="o">gratis</span> blijven',
+    "s5.lede":"Alle MorphLab-plug-ins zijn gratis. Donaties helpen de kosten van ontwikkeling en distributie te dekken.",
+    "kofi.btn":"Steun via Ko-fi",
+    "foot.contact":"Contact", "foot.support":"Steun", "foot.country":"Nederland",
+    "card.download":"Download voor {os}", "card.or":"of", "card.manual":"Handleiding", "card.notes":"Release-notes",
+    "card.view":"{name} op volledige grootte bekijken", "card.alt":"Interface van {name}",
+    "tip.started":"Download gestart", "tip.enjoy":'Veel plezier met <span class="o">{name}</span>',
+    "tip.text":"Alle MorphLab-plug-ins zijn gratis. Heb je er iets aan, overweeg dan het project te steunen — donaties helpen de kosten van ontwikkeling en distributie te dekken.",
+    "tip.later":"Misschien later", "close":"Sluiten", "lang":"Taal",
+    "morphclipper.tag":"Masteringclipper",
+    "morphclipper.text":"Een clipper van masteringniveau met een oversampled clipfase, een true-peak-ceiling gemeten volgens ITU-R BS.1770, een verplaatsbare transient/saturatie-insert en Mid/Side- of dual-mono-routing. Dichtheid zonder de mix plat te drukken.",
+    "morphlator.tag":"Multiband harmonische exciter",
+    "morphlator.text":"Voegt gewicht en waargenomen luidheid toe door de golfvorm te hervormen, niet door te comprimeren. De optionele splitsing in drie banden houdt het laag strak, en Gain Match geeft je een eerlijke A/B bij gelijke luidheid.",
+    "morphtransient.text":"Twee knoppen, attack en sustain, aangestuurd door niveau-onafhankelijke detectie met dubbele envelope — geen drempel om bij te stellen, geen pumping. Parallelle mix en een live vormmeter. Nul latentie.",
+    "morphdynamic.tag":"Multiband transiëntsaturator",
+    "morphdynamic.text":"Zet de transiënt naar voren, recht in je gezicht, zonder het signaal aan te tasten. Elke band reageert alleen op zijn eigen klappen terwijl de sustain schoon blijft. Vijf saturatietypes waaronder Transformer, aan/uit en solo per band op het spectrum.",
+    "morphase.tag":"All-pass fasetool",
+    "morphase.text":"Draait de fase met all-passfilters van de eerste of tweede orde zonder de amplitude aan te raken. Lijn kicks, layers en opnames met meerdere microfoons uit en bekijk het resultaat op een golfvorm die op de beat vastzit.",
+    "morphalign.tag":"Fase-uitlijning via sidechain",
+    "morphalign.text":"Lijnt het ene spoor uit op het andere via de sidechain, zodat kick en bas optellen met zo min mogelijk uitdoving. Vier engines — Rotate, Multiband, Match en Match LF — op één grote knop.",
+    "rx92.tag":"DJ-kanaalstrip",
+    "rx92.text":"Een kanaalstrip in clubstijl voor livesets: 3-bands EQ met kill, twee filters in serie met een tempogesynchroniseerde LFO en drie effectslots. Nul latentie, elke regelaar toe te wijzen aan je controller.",
+    "morphcontrolxl.tag":"Stepsequencer voor Launch Control XL",
+    "morphcontrolxl.text":"Een 16-staps drumsequencer in 909-stijl, bespeeld vanaf een Novation Launch Control XL. Acht instrumenten, accenten en een begeleide LEARN die elke controllerindeling mapt. Standalone app en plug-in.",
+    "morphcontrolxl.formats":"Standalone + AU + VST3 · Vereist Novation Launch Control XL"
+  },
+  fr: {
+    "title":"MorphLab Audio — Plug-ins audio gratuits",
+    "nav.plugins":"Plug-ins", "nav.tools":"Outils", "nav.install":"Installation", "nav.bugs":"Bugs", "nav.donate":"Faire un don",
+    "hero.pitch":"Des plug-ins gratuits nés dans un studio de mastering. Pour la production, le live, le mixage ou le mastering. Sans compte, sans clé de licence.",
+    "hero.get":"Télécharger les plug-ins", "hero.report":"Signaler un bug", "hero.audio":"Plug-ins audio",
+    "s1.label":"01 — Plug-ins", "s1.right":"7 · Gratuits", "s1.h":'Le <span class="o">rack</span>',
+    "s1.lede":"Pour macOS (AU + VST3, natifs sur Apple Silicon et Intel) et Windows 10/11 (VST3, 64 bits). Chaque téléchargement comprend un installateur et le manuel en anglais et en italien.",
+    "s2.label":"02 — Outils", "s2.h":'<span class="o">Outils</span>',
+    "s2.lede":"Des utilitaires pour le live et les contrôleurs matériels. Gratuits eux aussi.",
+    "s3.label":"03 — Installation", "s3.h":'Install<span class="o">ation</span>',
+    "s3.lede":"L’installateur place chaque format dans le bon dossier. Relancez ensuite l’analyse des plug-ins dans votre DAW.",
+    "s3.mac1":"Ouvrez le <code>.dmg</code> et double-cliquez sur le <code>.pkg</code> qu’il contient. AU et VST3 s’installent ensemble.",
+    "s3.mac2":"Si macOS indique qu’il ne peut pas vérifier le développeur&nbsp;: ouvrez Réglages Système → Confidentialité et sécurité, faites défiler vers le bas et cliquez sur «&nbsp;Ouvrir quand même&nbsp;». Une seule fois par plug-in suffit.",
+    "s3.win1":"Décompressez le fichier et lancez <code>Setup.exe</code>. Le VST3 est installé dans <code>C:\\Program Files\\Common Files\\VST3</code>.",
+    "s3.win2":"Si SmartScreen apparaît, cliquez sur «&nbsp;Informations complémentaires&nbsp;» → «&nbsp;Exécuter quand même&nbsp;».",
+    "s3.miss":"Introuvable&nbsp;?",
+    "s3.miss1":"Relancez l’analyse des plug-ins dans votre DAW. Dans Logic, l’AU se trouve sous Audio Units → MorphLab.",
+    "s3.miss2":"Toujours rien&nbsp;? Envoyez un rapport de bug en indiquant votre système et votre DAW, et je vous aiderai.",
+    "s4.label":"04 — Retours", "s4.right":"Bugs · Idées", "s4.h":"Un bug&nbsp;? Une idée&nbsp;?",
+    "s4.lede":"Chaque rapport est lu et reçoit une réponse. Indiquez votre système et la version de votre DAW pour que je puisse reproduire le problème.",
+    "s4.note":'Les rapports se font sur GitHub (un compte gratuit est nécessaire). Pas de compte&nbsp;? Écrivez à <a href="mailto:info@morphlabaudio.com">info@morphlabaudio.com</a>.',
+    "fb.bug":"Signaler un bug", "fb.bugText":"Un plantage, un son anormal ou un plug-in qui ne se charge pas.",
+    "fb.idea":"Proposer une amélioration", "fb.ideaText":"Une fonction, un ajustement du workflow, une idée de nouveau plug-in.",
+    "fb.which":"Quel plug-in&nbsp;?",
+    "news.h":'Nouveaux plug-ins, <span class="o">en avant-première.</span>', "news.btn":"S’inscrire à la newsletter",
+    "s5.label":"05 — Soutien", "s5.h":'Un don pour qu’ils restent <span class="o">gratuits</span>',
+    "s5.lede":"Tous les plug-ins MorphLab sont gratuits. Les dons aident à couvrir les frais de développement et de distribution.",
+    "kofi.btn":"Soutenir sur Ko-fi",
+    "foot.contact":"Contact", "foot.support":"Soutenir", "foot.country":"Pays-Bas",
+    "card.download":"Télécharger pour {os}", "card.or":"ou", "card.manual":"Manuel", "card.notes":"Notes",
+    "card.view":"Voir {name} en taille réelle", "card.alt":"Interface de {name}",
+    "tip.started":"Téléchargement lancé", "tip.enjoy":'Profitez bien de <span class="o">{name}</span>',
+    "tip.text":"Tous les plug-ins MorphLab sont gratuits. S’il vous est utile, pensez à soutenir le projet — les dons aident à couvrir les frais de développement et de distribution.",
+    "tip.later":"Plus tard", "close":"Fermer", "lang":"Langue",
+    "morphclipper.tag":"Clipper de mastering",
+    "morphclipper.text":"Un clipper de qualité mastering avec un étage de clip suréchantillonné, un plafond true-peak mesuré selon l’ITU-R BS.1770, un insert transitoire/saturation déplaçable et un routage Mid/Side ou double mono. De la densité sans écraser le mix.",
+    "morphlator.tag":"Exciter harmonique multibande",
+    "morphlator.text":"Ajoute du poids et du volume perçu en remodelant la forme d’onde, sans la compresser. Le découpage optionnel en trois bandes garde le bas du spectre serré, et Gain Match permet un A/B honnête à volume égal.",
+    "morphtransient.text":"Deux boutons, attaque et sustain, pilotés par une détection à double enveloppe indépendante du niveau — pas de seuil à réajuster, pas de pompage. Mix parallèle et indicateur de forme en temps réel. Latence nulle.",
+    "morphdynamic.tag":"Saturateur de transitoires multibande",
+    "morphdynamic.text":"Met le transitoire en avant, en pleine face, sans dégrader le signal. Chaque bande ne réagit qu’à ses propres frappes tandis que le sustain reste propre. Cinq types de saturation dont Transformer, activation et solo par bande sur le spectre.",
+    "morphase.tag":"Outil de phase passe-tout",
+    "morphase.text":"Fait tourner la phase avec des filtres passe-tout du premier ou du second ordre sans toucher à l’amplitude. Alignez kicks, couches et prises multi-micros, et observez le résultat sur une forme d’onde calée sur le beat.",
+    "morphalign.tag":"Alignement de phase par sidechain",
+    "morphalign.text":"Aligne une piste sur une autre via le sidechain, pour que kick et basse s’additionnent avec un minimum d’annulation. Quatre moteurs — Rotate, Multiband, Match et Match LF — sur un seul gros bouton.",
+    "rx92.tag":"Tranche de console DJ",
+    "rx92.text":"Une tranche de console façon club pour le live&nbsp;: EQ 3 bandes avec kill, deux filtres en série avec un LFO synchronisé au tempo et trois slots d’effets. Latence nulle, chaque contrôle assignable à votre contrôleur.",
+    "morphcontrolxl.tag":"Séquenceur pas à pas pour Launch Control XL",
+    "morphcontrolxl.text":"Un séquenceur de batterie 16 pas façon 909, joué depuis un Novation Launch Control XL. Huit instruments, des accents et un LEARN guidé qui s’adapte à n’importe quelle disposition du contrôleur. Application autonome et plug-in.",
+    "morphcontrolxl.formats":"Autonome + AU + VST3 · Nécessite un Novation Launch Control XL"
+  }
+};
+// English for the strings built in JS (the static ones are read from the HTML at startup)
+const EN = {
+  "title": document.title,
+  "fb.bug":"Report a bug", "fb.bugText":"Something crashes, sounds wrong or won’t load.",
+  "fb.idea":"Suggest an improvement", "fb.ideaText":"A feature, a workflow tweak, a new plugin idea.",
+  "fb.which":"Which plugin?",
+  "card.download":"Download for {os}", "card.or":"or", "card.manual":"Manual", "card.notes":"Notes",
+  "card.view":"View {name} at full size", "card.alt":"{name} interface",
+  "tip.started":"Download started", "tip.enjoy":'Enjoy <span class="o">{name}</span>',
+  "tip.text":"All MorphLab plugins are free. If it’s useful, consider supporting the project — donations help cover development and distribution costs.",
+  "tip.later":"Maybe later", "close":"Close", "lang":"Language"
+};
+PRODUCTS.forEach(p => { EN[p.id + ".tag"] = p.tag; EN[p.id + ".text"] = p.text; if (p.formats) EN[p.id + ".formats"] = p.formats; });
+document.querySelectorAll("[data-i18n]").forEach(el => { EN[el.dataset.i18n] = el.innerHTML; });
+
+const LANG_KEY = "ml-lang";
+function pickLang(){
+  const ok = c => LANGS.some(l => l.code === c);
+  const q = new URLSearchParams(location.search).get("lang");
+  if (ok(q)) return q;
+  try { const s = localStorage.getItem(LANG_KEY); if (ok(s)) return s; } catch {}
+  for (const l of navigator.languages || [navigator.language || ""]) {
+    const c = l.slice(0, 2).toLowerCase();
+    if (ok(c)) return c;
+  }
+  return "en";
+}
+let lang = pickLang();
+const t = (k, vars = {}) => ((I18N[lang] || {})[k] ?? EN[k] ?? k).replace(/\{(\w+)\}/g, (_, v) => vars[v] ?? "");
+
+let flagN = 0;
+function flag(c){
+  const v = (vb, body) => `<svg class="flag" viewBox="${vb}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${body}</svg>`;
+  if (c === "it") return v("0 0 3 2", '<path fill="#009246" d="M0 0h1v2H0z"/><path fill="#fff" d="M1 0h1v2H1z"/><path fill="#CE2B37" d="M2 0h1v2H2z"/>');
+  if (c === "fr") return v("0 0 3 2", '<path fill="#002654" d="M0 0h1v2H0z"/><path fill="#fff" d="M1 0h1v2H1z"/><path fill="#CE1126" d="M2 0h1v2H2z"/>');
+  if (c === "nl") return v("0 0 3 2", '<path fill="#AE1C28" d="M0 0h3v.67H0z"/><path fill="#fff" d="M0 .67h3v.66H0z"/><path fill="#21468B" d="M0 1.33h3V2H0z"/>');
+  const id = "uk" + (++flagN);
+  return v("0 0 60 30", `<clipPath id="${id}"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><path fill="#012169" d="M0 0h60v30H0z"/><path stroke="#fff" stroke-width="6" d="M0 0l60 30m0-30L0 30"/><path stroke="#C8102E" stroke-width="4" clip-path="url(#${id})" d="M0 0l60 30m0-30L0 30"/><path stroke="#fff" stroke-width="10" d="M30 0v30M0 15h60"/><path stroke="#C8102E" stroke-width="6" d="M30 0v30M0 15h60"/>`);
+}
+
+function buildPickers(){
+  document.querySelectorAll("[data-lang-picker]").forEach(box => {
+    box.innerHTML = `<button class="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false"></button>
+      <ul class="lang-menu" role="listbox">${LANGS.map(l => `<li><button type="button" role="option" data-l="${l.code}" lang="${l.code}">${flag(l.code)}${l.name}</button></li>`).join("")}</ul>`;
+    const btn = box.querySelector(".lang-btn");
+    btn.addEventListener("click", e => { e.stopPropagation(); const open = !box.classList.contains("open"); closePickers(); if (open) { box.classList.add("open"); btn.setAttribute("aria-expanded", "true"); } });
+    box.querySelectorAll("[data-l]").forEach(o => o.addEventListener("click", () => { setLang(o.dataset.l); closePickers(); btn.focus(); }));
+  });
+}
+function closePickers(){
+  document.querySelectorAll("[data-lang-picker].open").forEach(b => { b.classList.remove("open"); b.querySelector(".lang-btn").setAttribute("aria-expanded", "false"); });
+}
+document.addEventListener("click", closePickers);
+
+function render(){
+  document.documentElement.lang = lang;
+  document.title = t("title");
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-lang-picker]").forEach(box => {
+    const btn = box.querySelector(".lang-btn");
+    btn.innerHTML = `${flag(lang)}<span>${lang.toUpperCase()}</span><svg class="chev" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3"/></svg>`;
+    btn.setAttribute("aria-label", `${t("lang")}: ${LANGS.find(l => l.code === lang).name}`);
+    box.querySelectorAll("[data-l]").forEach(o => o.setAttribute("aria-selected", o.dataset.l === lang));
+  });
+  document.getElementById("grid-plugins").innerHTML = PRODUCTS.filter(p => p.group === "plugins").map(card).join("");
+  document.getElementById("grid-tools").innerHTML = PRODUCTS.filter(p => p.group === "tools").map(card).join("");
+  const was = document.getElementById("which")?.value;
+  const opts = PRODUCTS.map(p => `<option${p.name === was ? " selected" : ""}>${p.name}</option>`).join("");
+  document.getElementById("fb").innerHTML = `
+  <a href="#" data-t="bug_report.yml"><b>${t("fb.bug")}</b><span>${t("fb.bugText")}</span></a>
+  <a href="#" data-t="feature_request.yml"><b>${t("fb.idea")}</b><span>${t("fb.ideaText")}</span></a>
+  <label>${t("fb.which")}<select id="which">${opts}</select></label>`;
+}
+function setLang(c){
+  lang = c;
+  try { localStorage.setItem(LANG_KEY, c); } catch {}
+  render();
+}
 /* ============================================== */
 
 const ua = navigator.userAgent;
@@ -291,32 +551,41 @@ const ext = os => os === "mac" ? "mac.dmg" : "win.zip";
 
 function card(p){
   const first = isWin ? "win" : "mac", second = first === "mac" ? "win" : "mac";
+  const formats = p.formats ? t(p.id + ".formats") : "macOS 11+ · AU + VST3 &nbsp;|&nbsp; Windows 10+ · VST3";
   return `<article class="card">
-    <div class="shot" data-id="${p.id}" data-name="${p.name}" data-ver="${p.version}" role="button" tabindex="0" aria-label="View ${p.name} at full size"><img src="img/${p.id}.webp?v=${p.version}" alt="${p.name} interface" loading="lazy"></div>
+    <div class="shot" data-id="${p.id}" data-name="${p.name}" data-ver="${p.version}" role="button" tabindex="0" aria-label="${t("card.view", { name:p.name })}"><img src="img/${p.id}.webp?v=${p.version}" alt="${t("card.alt", { name:p.name })}" loading="lazy"></div>
     <div class="head"><h3>${p.name}</h3><span class="ver">v${p.version}</span></div>
-    <div class="tag">${p.tag}</div>
-    <p>${p.text}</p>
-    <div class="formats">${p.formats || "macOS 11+ · AU + VST3 &nbsp;|&nbsp; Windows 10+ · VST3"}</div>
+    <div class="tag">${t(p.id + ".tag")}</div>
+    <p>${t(p.id + ".text")}</p>
+    <div class="formats">${formats}</div>
     <div class="dl">
-      <a class="btn solid" data-dl="${p.name}" href="${asset(p, ext(first))}">Download for ${label(first)}</a>
-      <span class="alt">or <a data-dl="${p.name}" href="${asset(p, ext(second))}">${label(second)}</a> · <a href="${asset(p, "manual.pdf")}">Manual</a> · <a href="https://github.com/${REPO}/releases/tag/${tagOf(p)}">Notes</a></span>
+      <a class="btn solid" data-dl="${p.name}" href="${asset(p, ext(first))}">${t("card.download", { os:label(first) })}</a>
+      <span class="alt">${t("card.or")} <a data-dl="${p.name}" href="${asset(p, ext(second))}">${label(second)}</a> · <a href="${asset(p, "manual.pdf")}">${t("card.manual")}</a> · <a href="https://github.com/${REPO}/releases/tag/${tagOf(p)}">${t("card.notes")}</a></span>
     </div>
   </article>`;
 }
-document.getElementById("grid-plugins").innerHTML = PRODUCTS.filter(p => p.group === "plugins").map(card).join("");
-document.getElementById("grid-tools").innerHTML = PRODUCTS.filter(p => p.group === "tools").map(card).join("");
+buildPickers();
+render();
 
-const opts = PRODUCTS.map(p => `<option>${p.name}</option>`).join("");
-document.getElementById("fb").innerHTML = `
-  <a href="#" data-t="bug_report.yml"><b>Report a bug</b><span>Something crashes, sounds wrong or won’t load.</span></a>
-  <a href="#" data-t="feature_request.yml"><b>Suggest an improvement</b><span>A feature, a workflow tweak, a new plugin idea.</span></a>
-  <label>Which plugin?<select id="which">${opts}</select></label>`;
-document.querySelectorAll("#fb a").forEach(a => a.addEventListener("click", e => {
-  e.preventDefault();
-  const name = document.getElementById("which").value;
-  const q = new URLSearchParams({ template: a.dataset.t, plugin: name, title: `[${name}] ` });
-  window.open(`https://github.com/${REPO}/issues/new?${q}`, "_blank", "noopener");
-}));
+// cards and feedback links are rebuilt on every language change, so their clicks are delegated
+document.addEventListener("click", e => {
+  const fb = e.target.closest("#fb a");
+  if (fb) {
+    e.preventDefault();
+    const name = document.getElementById("which").value;
+    const q = new URLSearchParams({ template: fb.dataset.t, plugin: name, title: `[${name}] ` });
+    window.open(`https://github.com/${REPO}/issues/new?${q}`, "_blank", "noopener");
+    return;
+  }
+  const shot = e.target.closest(".shot");
+  if (shot) { openShot(shot); return; }
+  const dl = e.target.closest("[data-dl]");
+  if (dl && !tipSeen()) setTimeout(() => openTip(dl.dataset.dl, dl), 600);
+});
+document.addEventListener("keydown", e => {
+  const shot = e.target.closest && e.target.closest(".shot");
+  if (shot && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openShot(shot); }
+});
 
 document.getElementById("yr").textContent = new Date().getFullYear();
 
@@ -339,7 +608,7 @@ function openShot(shot){
   lb.setAttribute("role", "dialog");
   lb.setAttribute("aria-modal", "true");
   lb.setAttribute("aria-label", `${shot.dataset.name} at full size`);
-  lb.innerHTML = `<button class="lb-close" aria-label="Close">×</button><img src="img/full/${shot.dataset.id}.webp?v=${shot.dataset.ver}" alt="${shot.dataset.name} interface at full size">`;
+  lb.innerHTML = `<button class="lb-close" aria-label="${t("close")}">×</button><img src="img/full/${shot.dataset.id}.webp?v=${shot.dataset.ver}" alt="${t("card.alt", { name:shot.dataset.name })}">`;
   const img = lb.querySelector("img");
   // width only, never width+height: capping both independently squashes the image
   const size = () => {
@@ -365,10 +634,6 @@ function openShot(shot){
   requestAnimationFrame(() => lb && lb.classList.add("on"));
   lb.querySelector(".lb-close").focus();
 }
-document.querySelectorAll(".shot").forEach(s => {
-  s.addEventListener("click", () => openShot(s));
-  s.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openShot(s); } });
-});
 // Ko-fi popup: once per visitor, after the first installer download.
 // The download itself is never blocked; storage can throw (private mode), then it just shows again next visit.
 const TIP_KEY = "ml-tip-shown";
@@ -391,11 +656,11 @@ function openTip(name, from){
   tip.setAttribute("aria-modal", "true");
   tip.setAttribute("aria-labelledby", "tip-h");
   tip.innerHTML = `<div class="box">
-    <button class="lb-close" aria-label="Close">×</button>
-    <div class="label">Download started</div>
-    <h3 id="tip-h">Enjoy <span class="o">${name}</span></h3>
-    <p>All MorphLab plugins are free. If it’s useful, consider supporting the project — donations help cover development and distribution costs.</p>
-    <div class="actions"><a class="btn solid" href="${KOFI}" target="_blank" rel="noopener">Support on Ko-fi</a><button class="later">Maybe later</button></div>
+    <button class="lb-close" aria-label="${t("close")}">×</button>
+    <div class="label">${t("tip.started")}</div>
+    <h3 id="tip-h">${t("tip.enjoy", { name })}</h3>
+    <p>${t("tip.text")}</p>
+    <div class="actions"><a class="btn solid" href="${KOFI}" target="_blank" rel="noopener">${t("kofi.btn")}</a><button class="later">${t("tip.later")}</button></div>
   </div>`;
   tip.addEventListener("click", e => { if (e.target === tip) closeTip(); });
   tip.querySelector(".lb-close").addEventListener("click", closeTip);
@@ -406,10 +671,7 @@ function openTip(name, from){
   requestAnimationFrame(() => tip && tip.classList.add("on"));
   tip.querySelector(".btn").focus();
 }
-document.querySelectorAll("[data-dl]").forEach(a => a.addEventListener("click", () => {
-  if (!tipSeen()) setTimeout(() => openTip(a.dataset.dl, a), 600);
-}));
-document.addEventListener("keydown", e => { if (e.key === "Escape") { closeTip(); closeShot(); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeTip(); closeShot(); closePickers(); } });
 
 </script>
 </body>

@@ -114,6 +114,17 @@ h2 .o{color:transparent;-webkit-text-stroke:1.5px var(--green)}
 
 .news{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px 0}
 .news h2{margin:0;max-width:14ch}
+.sub{flex:1;max-width:540px}
+.sub-row{display:flex;gap:10px}
+.sub input[type=email]{flex:1;min-width:0;padding:13px 20px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg2);color:var(--ink);font:400 16px/1.2 var(--body);outline:none;transition:border-color .15s}
+.sub input[type=email]:focus{border-color:var(--green)}
+.sub input::placeholder{color:var(--mute)}
+.sub .btn:disabled{opacity:.5;cursor:wait}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.sub-msg{font-size:14px;margin-top:12px;color:var(--green)}
+.sub-msg:empty{display:none}
+.sub-msg.err{color:var(--ink)}
+.sub-note{font-size:13px;color:var(--mute);margin-top:12px}
 
 .support{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
 .support .lede{margin:0}
@@ -166,7 +177,7 @@ footer a:hover{color:var(--green)}
   .hero .fade{background-color:rgba(20,20,22,.32)}
   .wordmark .lab{-webkit-text-stroke-width:2px}
 }
-@media (max-width:480px){.btn{white-space:normal;text-align:center;line-height:1.3}}
+@media (max-width:480px){.btn{white-space:normal;text-align:center;line-height:1.3}.sub-row{flex-direction:column}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
@@ -242,7 +253,16 @@ footer a:hover{color:var(--green)}
 <section id="news">
   <div class="news">
     <h2 data-i18n="news.h">Stay in the <span class="o">loop.</span></h2>
-    <a class="btn solid" href="mailto:info@morphlabaudio.com?subject=Newsletter" id="subscribe" data-i18n="news.btn">Join the newsletter</a>
+    <form class="sub" id="subscribe" method="post" target="_blank" novalidate>
+      <div class="sub-row">
+        <input type="email" name="email_address" required autocomplete="email" placeholder="Email address" data-i18n-ph="news.ph" aria-label="Email">
+        <button class="btn solid" type="submit" data-i18n="news.sub">Subscribe</button>
+      </div>
+      <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="fields[language]" value="en">
+      <p class="sub-msg" role="status" aria-live="polite"></p>
+      <p class="sub-note" data-i18n="news.privacy">Double opt-in, no spam, unsubscribe in one click. Your address is stored by Kit and used only for this newsletter.</p>
+    </form>
   </div>
 </section>
 
@@ -271,6 +291,7 @@ footer a:hover{color:var(--green)}
    3. change "version" below and push.                                   */
 const REPO = "morphlabaudio/morphlabaudio-site";
 const KOFI = "https://ko-fi.com/morphlabaudio";
+const KIT_FORM = "";  // Kit form ID (number in the form's URL in the Kit dashboard)
 const PRODUCTS = [
   { id:"morphclipper", file:"MorphClipper", name:"MorphClipper", version:"3.2", group:"plugins",
     tag:"Mastering clipper",
@@ -332,7 +353,10 @@ const I18N = {
     "fb.bug":"Segnala un bug", "fb.bugText":"Qualcosa va in crash, suona male o non si carica.",
     "fb.idea":"Suggerisci un miglioramento", "fb.ideaText":"Una funzione, un ritocco al flusso di lavoro, l’idea per un nuovo plugin.",
     "fb.which":"Quale plugin?",
-    "news.h":'Rimani sul <span class="o">pezzo.</span>', "news.btn":"Iscriviti alla newsletter",
+    "news.h":'Rimani sul <span class="o">pezzo.</span>', "news.sub":"Iscriviti", "news.ph":"Indirizzo email",
+    "news.privacy":"Doppia conferma, niente spam, ti cancelli con un clic. L’indirizzo è conservato da Kit e usato solo per questa newsletter.",
+    "news.ok":"Quasi fatto: controlla la posta e conferma l’iscrizione.", "news.invalid":"Inserisci un indirizzo email valido.",
+    "news.fail":"Qualcosa non ha funzionato. Riprova tra poco o scrivi a info@morphlabaudio.com.",
     "s5.label":"05 — Sostegno", "s5.h":'Dona per <span class="o">sostenerci</span>',
     "s5.lede":"Tutti i plugin MorphLab sono gratuiti. Le donazioni aiutano a coprire i costi di sviluppo e distribuzione.",
     "kofi.btn":"Sostieni su Ko-fi",
@@ -383,7 +407,10 @@ const I18N = {
     "fb.bug":"Meld een bug", "fb.bugText":"Iets crasht, klinkt verkeerd of laadt niet.",
     "fb.idea":"Stel een verbetering voor", "fb.ideaText":"Een functie, een aanpassing in de workflow, een idee voor een nieuwe plug-in.",
     "fb.which":"Welke plug-in?",
-    "news.h":'Blijf op de <span class="o">hoogte.</span>', "news.btn":"Aanmelden voor de nieuwsbrief",
+    "news.h":'Blijf op de <span class="o">hoogte.</span>', "news.sub":"Aanmelden", "news.ph":"E-mailadres",
+    "news.privacy":"Dubbele bevestiging, geen spam, met één klik afmelden. Je adres wordt bewaard door Kit en alleen voor deze nieuwsbrief gebruikt.",
+    "news.ok":"Bijna klaar — check je inbox en bevestig je aanmelding.", "news.invalid":"Vul een geldig e-mailadres in.",
+    "news.fail":"Er ging iets mis. Probeer het zo opnieuw of mail naar info@morphlabaudio.com.",
     "s5.label":"05 — Steun", "s5.h":'Doneer om <span class="o">ons te steunen</span>',
     "s5.lede":"Alle MorphLab-plug-ins zijn gratis. Donaties helpen de kosten van ontwikkeling en distributie te dekken.",
     "kofi.btn":"Steun via Ko-fi",
@@ -434,7 +461,10 @@ const I18N = {
     "fb.bug":"Signaler un bug", "fb.bugText":"Un plantage, un son anormal ou un plug-in qui ne se charge pas.",
     "fb.idea":"Proposer une amélioration", "fb.ideaText":"Une fonction, un ajustement du workflow, une idée de nouveau plug-in.",
     "fb.which":"Quel plug-in&nbsp;?",
-    "news.h":'Restez <span class="o">branchés.</span>', "news.btn":"S’inscrire à la newsletter",
+    "news.h":'Restez <span class="o">branchés.</span>', "news.sub":"S’inscrire", "news.ph":"Adresse e-mail",
+    "news.privacy":"Double confirmation, pas de spam, désinscription en un clic. Votre adresse est conservée par Kit et utilisée uniquement pour cette newsletter.",
+    "news.ok":"Presque terminé — vérifiez votre boîte mail et confirmez votre inscription.", "news.invalid":"Saisissez une adresse e-mail valide.",
+    "news.fail":"Une erreur s’est produite. Réessayez dans un instant ou écrivez à info@morphlabaudio.com.",
     "s5.label":"05 — Soutien", "s5.h":'Faites un don pour <span class="o">nous soutenir</span>',
     "s5.lede":"Tous les plug-ins MorphLab sont gratuits. Les dons aident à couvrir les frais de développement et de distribution.",
     "kofi.btn":"Soutenir sur Ko-fi",
@@ -472,7 +502,10 @@ const EN = {
   "card.view":"View {name} at full size", "card.alt":"{name} interface",
   "tip.started":"Download started", "tip.enjoy":'Enjoy <span class="o">{name}</span>',
   "tip.text":"All MorphLab plugins are free. If it’s useful, consider supporting the project — donations help cover development and distribution costs.",
-  "tip.later":"Maybe later", "close":"Close", "lang":"Language"
+  "tip.later":"Maybe later", "close":"Close", "lang":"Language",
+  "news.ph":"Email address",
+  "news.ok":"Almost done — check your inbox and confirm your subscription.", "news.invalid":"Please enter a valid email address.",
+  "news.fail":"Something went wrong. Try again in a moment or email info@morphlabaudio.com."
 };
 PRODUCTS.forEach(p => { EN[p.id + ".tag"] = p.tag; EN[p.id + ".text"] = p.text; if (p.formats) EN[p.id + ".formats"] = p.formats; });
 document.querySelectorAll("[data-i18n]").forEach(el => { EN[el.dataset.i18n] = el.innerHTML; });
@@ -520,6 +553,9 @@ function render(){
   document.documentElement.lang = lang;
   document.title = t("title");
   document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelector('#subscribe [name="fields[language]"]').value = lang;
+  document.querySelector("#subscribe .sub-msg").textContent = "";
   document.querySelectorAll("[data-lang-picker]").forEach(box => {
     const btn = box.querySelector(".lang-btn");
     btn.innerHTML = `${flag(lang)}<span>${lang.toUpperCase()}</span><svg class="chev" viewBox="0 0 8 8" aria-hidden="true"><path d="M1 2.5l3 3 3-3"/></svg>`;
@@ -585,6 +621,30 @@ document.addEventListener("click", e => {
 document.addEventListener("keydown", e => {
   const shot = e.target.closest && e.target.closest(".shot");
   if (shot && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openShot(shot); }
+});
+
+// Newsletter: posts to Kit's public form endpoint; Kit sends the double opt-in email.
+// If the JSON request fails (network, CORS), the form is submitted normally into a new tab
+// so Kit can show its own confirmation page.
+const sub = document.getElementById("subscribe");
+sub.action = `https://app.kit.com/forms/${KIT_FORM}/subscriptions`;
+sub.addEventListener("submit", async e => {
+  e.preventDefault();
+  const msg = sub.querySelector(".sub-msg"), btn = sub.querySelector("button"), email = sub.querySelector("[type=email]");
+  const say = (k, err) => { msg.textContent = t(k); msg.classList.toggle("err", !!err); };
+  if (sub.querySelector(".hp").value) { say("news.ok"); return; }
+  if (!email.checkValidity()) { say("news.invalid", true); email.focus(); return; }
+  btn.disabled = true;
+  try {
+    const r = await fetch(sub.action, { method:"POST", headers:{ Accept:"application/json" }, body:new FormData(sub) });
+    if (!r.ok) throw new Error(r.status);
+    say("news.ok");
+    email.value = "";
+  } catch {
+    try { sub.submit(); say("news.ok"); } catch { say("news.fail", true); }
+  } finally {
+    btn.disabled = false;
+  }
 });
 
 document.getElementById("yr").textContent = new Date().getFullYear();

@@ -31,8 +31,8 @@ README.md                       short publishing notes
 | morphtransient | MorphTransient | 2.4 | plugins |
 | morphdynamic | MorphDynamic MB Transient | 2.7 | plugins |
 | morphase | MorPhase | 2.1 | plugins |
-| morphalign | MorPhalign | 3.1 | plugins |
-| rx92 | RX92 | 2.1 | plugins |
+| morphalign | MorPhalign | 3.2 | plugins |
+| rx92 | RX92 | 2.2 | plugins |
 | morphcontrolxl | MorphControl XL | 1.2 | tools (needs Novation Launch Control XL) |
 
 All are free. Each entry has `id, file, name, version, group, tag, text` (+ optional `formats`).

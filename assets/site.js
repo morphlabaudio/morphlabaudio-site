@@ -35,9 +35,9 @@ const PRODUCTS = [
     released:"2026-10-31", older:[{ version:"2.1", released:"2026-10-05" }],
     tag:"All-pass phase tool",
     text:"Rotates phase with first- or second-order all-pass filters without touching the magnitude. Align kicks, layers and multi-mic recordings, and watch the result on a beat-locked waveform." },
-  { id:"rx92", file:"RX92", name:"RX92", version:"2.2", group:"plugins",
+  { id:"rx92", file:"RX92", name:"RX92", version:"2.3", group:"plugins",
     tall:true,  // narrow, very tall UI: its page shows the full-resolution screenshot whole instead of a 16:10 box
-    released:"2026-10-16", older:[],
+    released:"2026-10-31", older:[{ version:"2.2", released:"2026-10-16" }],
     tag:"DJ channel strip",
     text:"A channel strip modelled on the famous club mixer, built for live sets: 3-band EQ with kill, two series filters with a tempo-synced LFO and three effect slots inspired by the most-used DJ mixers. Zero latency, every parameter mappable to your MIDI controller." },
   { id:"morphcontrolxl", file:"MorphControl-XL", name:"MorphControl XL", version:"1.2", group:"tools",

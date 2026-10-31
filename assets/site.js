@@ -3,6 +3,7 @@
    1. create a GitHub release with tag  <id>-v<version>  (e.g. morphclipper-v3.3)
    2. attach  <file>-mac.dmg  <file>-win.zip  <file>-manual.pdf
    3. move the current version into "older" (newest first), set "version" and "released", push.
+   4. "changes": what changed in THIS version, per language (approved by Rey first). Shown on the plugin page.
    Older versions stay downloadable only from the plugin's own page (/<id>/).   */
 const REPO = "morphlabaudio/morphlabaudio-site";
 const KOFI = "https://ko-fi.com/morphlabaudio";
@@ -11,8 +12,26 @@ const KOFI = "https://ko-fi.com/morphlabaudio";
 const KIT_FORM = "";  // Kit form ID (number in the form's URL in the Kit dashboard)
 const GFORM = { id:"1FAIpQLSfoSDcsLAx3iHIOuTj7FWFp72RAhg5goRBncEZs6C3idG0lGw", email:"entry.1125075590", lang:"entry.1324719701", consent:"entry.672579942" };  // form id (…/forms/d/e/<id>/viewform) + entry.NNN of each question
 const PRODUCTS = [
-  { id:"morphclipper", file:"MorphClipper", name:"MorphClipper", version:"3.3", group:"plugins",
-    released:"2026-10-31", older:[{ version:"3.2", released:"2026-10-09" }],
+  { id:"morphclipper", file:"MorphClipper", name:"MorphClipper", version:"3.4", group:"plugins",
+    released:"2026-10-31", older:[{ version:"3.3", released:"2026-10-31" }, { version:"3.2", released:"2026-10-09" }],
+    changes:{
+      en:["TRANSFORMER reworked: it now saturates the whole signal, not just the low end. It adds warm even harmonics across the full range, with a little extra push on the bass, and no longer lowers the level or darkens the sound.",
+          "Fix: with DC FILT on, the output could go above the CEILING. DC FILT now works before the ceiling, so the ceiling is always respected.",
+          "Fix: dBTP — click removed.",
+          "Fix: PROCESSING ON — click removed."],
+      it:["TRANSFORMER rivisto: ora satura tutto il segnale, non solo le basse. Aggiunge armoniche pari calde su tutta la gamma, con un po' di spinta in più sul basso, e non abbassa più il livello né scurisce il suono.",
+          "Fix: con DC FILT acceso l'uscita poteva superare il CEILING. Ora DC FILT lavora prima del ceiling e il tetto viene sempre rispettato.",
+          "Fix: dBTP — eliminato click.",
+          "Fix: ON di PROCESSING — eliminato click."],
+      nl:["TRANSFORMER herzien: hij satureert nu het hele signaal, niet alleen het laag. Hij voegt warme even harmonischen toe over het hele spectrum, met wat extra duw op de bas, en verlaagt het niveau niet meer en maakt het geluid niet meer donkerder.",
+          "Fix: met DC FILT aan kon de output boven de CEILING uitkomen. DC FILT werkt nu vóór de ceiling, zodat die altijd wordt gerespecteerd.",
+          "Fix: dBTP — klik verwijderd.",
+          "Fix: PROCESSING ON — klik verwijderd."],
+      fr:["TRANSFORMER revu : il sature désormais tout le signal, pas seulement le grave. Il ajoute des harmoniques paires chaleureuses sur tout le spectre, avec un peu plus de poussée sur la basse, et ne baisse plus le niveau ni n’assombrit le son.",
+          "Correctif : avec DC FILT activé, la sortie pouvait dépasser le CEILING. DC FILT agit maintenant avant le plafond, qui est donc toujours respecté.",
+          "Correctif : dBTP — clic supprimé.",
+          "Correctif : ON de PROCESSING — clic supprimé."]
+    },
     tag:"Mastering clipper",
     text:"A mastering-grade clipper with an oversampled clip stage, a true-peak ceiling measured to ITU-R BS.1770, a movable transient/saturation insert and Mid/Side or dual-mono routing. Density without crushing the mix." },
   { id:"morphdynamic", file:"MorphDynamic-MB-Transient", name:"MorphDynamic MB Transient", version:"2.8", group:"plugins",
@@ -101,6 +120,7 @@ const I18N = {
     "pg.bug":"Segnala un bug", "pg.idea":"Suggerisci un miglioramento",
     "pg.olderLabel":"Archivio", "pg.olderH":'Versioni <span class="o">precedenti</span>',
     "pg.olderLede":"Build vecchie, tenute per i progetti salvati con quelle versioni. Non vengono più aggiornate: per lavorare usa l’ultima versione qui sopra.",
+    "pg.newLabel":"Novità", "pg.newH":'Cosa cambia nella <span class="o">v{v}</span>',
     "pg.old":"Vecchia", "pg.none":"Nessuna versione precedente: la v{v} è la prima pubblicata su questo sito.",
     "morphclipper.tag":"Clipper da mastering",
     "morphclipper.text":"Un clipper di livello mastering con stadio di clip in oversampling, ceiling true-peak misurato secondo ITU-R BS.1770, un insert transient/saturazione spostabile e routing Mid/Side o dual-mono. Densità senza schiacciare il mix.",
@@ -164,6 +184,7 @@ const I18N = {
     "pg.bug":"Meld een bug", "pg.idea":"Stel een verbetering voor",
     "pg.olderLabel":"Archief", "pg.olderH":'Eerdere <span class="o">versies</span>',
     "pg.olderLede":"Oudere builds, bewaard voor projecten die ermee zijn opgeslagen. Ze worden niet meer bijgewerkt: gebruik voor nieuw werk de nieuwste versie hierboven.",
+    "pg.newLabel":"Nieuw", "pg.newH":'Wat is nieuw in <span class="o">v{v}</span>',
     "pg.old":"Oud", "pg.none":"Nog geen eerdere versies: v{v} is de eerste release op deze site.",
     "morphclipper.tag":"Masteringclipper",
     "morphclipper.text":"Een clipper van masteringniveau met een oversampled clipfase, een true-peak-ceiling gemeten volgens ITU-R BS.1770, een verplaatsbare transient/saturatie-insert en Mid/Side- of dual-mono-routing. Dichtheid zonder de mix plat te drukken.",
@@ -227,6 +248,7 @@ const I18N = {
     "pg.bug":"Signaler un bug", "pg.idea":"Proposer une amélioration",
     "pg.olderLabel":"Archives", "pg.olderH":'Versions <span class="o">précédentes</span>',
     "pg.olderLede":"Anciennes versions, conservées pour les projets enregistrés avec elles. Elles ne sont plus mises à jour&nbsp;: pour un nouveau travail, utilisez la dernière version ci-dessus.",
+    "pg.newLabel":"Nouveautés", "pg.newH":'Quoi de neuf dans la <span class="o">v{v}</span>',
     "pg.old":"Ancienne", "pg.none":"Pas encore de version précédente&nbsp;: la v{v} est la première publiée sur ce site.",
     "morphclipper.tag":"Clipper de mastering",
     "morphclipper.text":"Un clipper de qualité mastering avec un étage de clip suréchantillonné, un plafond true-peak mesuré selon l’ITU-R BS.1770, un insert transitoire/saturation déplaçable et un routage Mid/Side ou double mono. De la densité sans écraser le mix.",
@@ -262,6 +284,7 @@ const EN = {
   "pg.bug":"Report a bug", "pg.idea":"Suggest an improvement",
   "pg.olderLabel":"Archive", "pg.olderH":'Previous <span class="o">versions</span>',
   "pg.olderLede":"Older builds, kept for projects that were saved with them. They are not updated any more: for new work use the latest version above.",
+  "pg.newLabel":"What's new", "pg.newH":'New in <span class="o">v{v}</span>',
   "pg.old":"Old", "pg.none":"No previous versions yet: v{v} is the first release on this site.",
   "news.ph":"Email address",
   "news.thanks":"Thanks — you’re on the list. Newsletters come from info@morphlabaudio.com.", "news.needConsent":"Please tick the box to confirm you want the newsletter.",
@@ -375,6 +398,16 @@ function card(p){
     <a class="more" href="/${p.id}/">${t("card.more")} →</a>
   </article>`;
 }
+// "What's new" box: only for the current version, only if its notes exist (English fallback).
+function changesOf(p){
+  const c = p.changes && (p.changes[lang] || p.changes.en);
+  if (!c || !c.length) return "";
+  return `<section class="changes">
+    <div class="shead label"><span>${t("pg.newLabel")}</span><span>v${p.version}</span></div>
+    <h2>${t("pg.newH", { v:p.version })}</h2>
+    <ul class="chg-list">${c.map(x => `<li>${x}</li>`).join("")}</ul>
+  </section>`;
+}
 function renderPlugin(){
   const p = PRODUCTS.find(x => x.id === PAGE_ID);
   document.title = `${p.name} — MorphLab Audio`;
@@ -401,6 +434,7 @@ function renderPlugin(){
       </div>
     </div>
   </section>
+  ${changesOf(p)}
   <section class="older" id="older">
     <div class="older-box">
       <div class="shead label"><span>${t("pg.olderLabel")}</span><span>${p.older.length}</span></div>

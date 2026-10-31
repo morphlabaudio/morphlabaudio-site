@@ -178,6 +178,11 @@ footer a:hover{color:var(--green)}
 .pg-info .pg-fb{font-size:14px;margin-top:22px}
 .pg-fb a{color:var(--mute)}
 .pg-fb a:hover{color:var(--green)}
+/* what's new in the current version */
+.changes{padding-top:120px}
+.chg-list{list-style:none;border-top:1px solid var(--line);max-width:80ch}
+.chg-list li{position:relative;padding:16px 0 16px 26px;border-bottom:1px solid var(--line);color:var(--ink)}
+.chg-list li::before{content:"";position:absolute;left:0;top:25px;width:10px;height:2px;background:var(--green)}
 /* the archive is grey on purpose: green belongs to the latest version only */
 .older{padding-top:160px}
 .older-box{border:1px dashed var(--line);border-radius:4px;padding:40px;background:var(--bg2)}

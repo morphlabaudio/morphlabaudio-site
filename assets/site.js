@@ -11,8 +11,8 @@ const KOFI = "https://ko-fi.com/morphlabaudio";
 const KIT_FORM = "";  // Kit form ID (number in the form's URL in the Kit dashboard)
 const GFORM = { id:"1FAIpQLSfoSDcsLAx3iHIOuTj7FWFp72RAhg5goRBncEZs6C3idG0lGw", email:"entry.1125075590", lang:"entry.1324719701", consent:"entry.672579942" };  // form id (…/forms/d/e/<id>/viewform) + entry.NNN of each question
 const PRODUCTS = [
-  { id:"morphclipper", file:"MorphClipper", name:"MorphClipper", version:"3.2", group:"plugins",
-    released:"2026-10-09", older:[],
+  { id:"morphclipper", file:"MorphClipper", name:"MorphClipper", version:"3.3", group:"plugins",
+    released:"2026-10-31", older:[{ version:"3.2", released:"2026-10-09" }],
     tag:"Mastering clipper",
     text:"A mastering-grade clipper with an oversampled clip stage, a true-peak ceiling measured to ITU-R BS.1770, a movable transient/saturation insert and Mid/Side or dual-mono routing. Density without crushing the mix." },
   { id:"morphdynamic", file:"MorphDynamic-MB-Transient", name:"MorphDynamic MB Transient", version:"2.8", group:"plugins",

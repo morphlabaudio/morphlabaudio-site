@@ -24,26 +24,30 @@ img/<id>.webp                   plugin UI screenshots for the cards (taken from 
 img/full/<id>.webp              same screenshot at the manual's full resolution, lossless; opened by clicking a card image
 .github/ISSUE_TEMPLATE/         bug_report.yml, feature_request.yml, config.yml (field id "plugin" is prefilled by the site)
 README.md                       short publishing notes
+.github/download_stats.py       daily download-count snapshot (see "Download stats")
+.github/workflows/download-stats.yml   runs it every day at 04:17 UTC
 ```
 
 ## Products — the `PRODUCTS` list at the top of assets/site.js
-| id | name | version | group |
-|---|---|---|---|
-| morphclipper | MorphClipper | 3.2 | plugins |
-| morphlator | MorPhlator | 2.2 | plugins |
-| morphtransient | MorphTransient | 2.4 | plugins |
-| morphdynamic | MorphDynamic MB Transient | 2.7 | plugins |
-| morphase | MorPhase | 2.1 | plugins |
-| morphalign | MorPhalign | 3.2 | plugins |
-| rx92 | RX92 | 2.2 | plugins |
-| morphcontrolxl | MorphControl XL | 1.2 | tools (needs Novation Launch Control XL) |
+| id | name | version | released | older (on the plugin page) | group |
+|---|---|---|---|---|---|
+| morphclipper | MorphClipper | 3.4 | 2026-10-31 | 3.3, 3.2 | plugins |
+| morphlator | MorPhlator | 2.3 | 2026-10-31 | 2.2 | plugins |
+| morphtransient | MorphTransient | 2.5 | 2026-10-31 | 2.4 | plugins |
+| morphdynamic | MorphDynamic MB Transient | 2.8 | 2026-10-30 | 2.7 | plugins |
+| morphase | MorPhase | 2.2 | 2026-10-31 | 2.1 | plugins |
+| morphalign | MorPhalign | 3.3 | 2026-10-31 | 3.2 | plugins |
+| rx92 | RX92 | 2.3 | 2026-10-31 | 2.2 | plugins |
+| morphcontrolxl | MorphControl XL | 1.2 | 2026-10-05 | — | tools (needs Novation Launch Control XL) |
+
+(Table checked against `PRODUCTS` and GitHub Releases on 2026-11-03. `assets/site.js` is the source of truth; update this table when you publish a version.)
 
 All are free. Each entry has `id, file, name, version, released, older, group, tag, text` (+ optional `formats`).
 `older` = previous versions still on GitHub Releases, newest first: `{ version, released }`. They are downloadable ONLY from the plugin page, never from the home.
 
 ## Download URLs (do not break)
 `https://github.com/morphlabaudio/morphlabaudio-site/releases/download/<id>-v<version>/<file>-{mac.dmg|win.zip|manual.pdf}`
-All 8 releases are published with 3 assets each. Buttons show the visitor's OS first (Windows if UA says Windows, else macOS).
+20 releases are published (every version in the table above, plus older test tags `morphalign-v3.1`, `morphdynamic-v2.6`, `rx92-v2.0`, `rx92-v2.1` that the site does not link), each with 3 assets. Buttons show the visitor's OS first (Windows if UA says Windows, else macOS).
 
 ### Publishing a new plugin version
 1. Build the distro as usual (DMG in `Vst Developer/<Plugin>_vX/…OSX.dmg`, zip in `Vst Windows/<Plugin> vX/…WIN.zip`).
@@ -52,6 +56,16 @@ All 8 releases are published with 3 assets each. Buttons show the visitor's OS f
 3. `changes` (since 2026-10-31, Rey's rule): `{ en:[…], it:[…], nl:[…], fr:[…] }` = what changed in THIS version, list approved by Rey before publishing. Rendered as the "What's new" box on the plugin page (only for the current version; replace it on the next release). First used: MorphClipper 3.4.
 4. In `PRODUCTS`: move the current version into `older` (top of the list), set the new `version` and `released`, commit, push. Never delete the old release: the plugin page links to it. The card and full-size image URLs carry `?v=<version>`, so a new screenshot reaches browsers that cached the old one (the CDN sends max-age 4h).
 New screenshot: pdfimages is not installed; use pypdf (`PdfReader(pdf).pages[0].images[0].image`) → save lossless webp as `img/full/<id>.webp`, and resized to max 1200px as `img/<id>.webp` (quality ~82).
+
+## Download stats
+GitHub only keeps a running total per release file (no history, no unique users), readable from
+`https://api.github.com/repos/morphlabaudio/morphlabaudio-site/releases` (`assets[].download_count`).
+For the trend, the GitHub Action `download-stats.yml` saves a snapshot every day into `downloads.csv` on the **`stats` branch**
+(one row per release per day: `date, tag, plugin, version, published, mac, win, manual`; cumulative counts, so daily downloads = difference between days).
+Commits there carry `[skip ci]` so Cloudflare Pages does not build them. Never merge `stats` into `main`. First snapshot: 2026-11-03.
+It can also be started by hand (Actions → Download stats → Run workflow). GitHub pauses scheduled workflows after 60 days without commits on the repo.
+Rey's charts: Claude dashboard "MorphLab Downloads" (https://claude.ai/artifact/LSioGFQpBtysnvhG8jqbSf), fed by that CSV; to refresh it, upload the new `downloads.csv` to it.
+Counts include Rey's own test downloads and bots.
 
 ## Design system (from Rey's logo mockup "05k — Con griglia tecnica e LAB verde")
 - Colours: bg `#141416`, panel `#1B1B1E`, text `#EDEDEA`, muted `#8A8A8F`, lines `#3A3A3F`, **green `#5BD15B`**. Black / green / white only. Dark-only site.

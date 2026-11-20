@@ -285,6 +285,9 @@ const EN = {
   "pg.olderLabel":"Archive", "pg.olderH":'Previous <span class="o">versions</span>',
   "pg.olderLede":"Older builds, kept for projects that were saved with them. They are not updated any more: for new work use the latest version above.",
   "pg.newLabel":"What's new", "pg.newH":'New in <span class="o">v{v}</span>',
+  "s5.label":"05 — Support", "s5.h":'Donate to <span class="o">support us</span>',
+  "s5.lede":"All MorphLab plugins are free. Donations help cover development and distribution costs.",
+  "kofi.btn":"Support on Ko-fi",
   "pg.old":"Old", "pg.none":"No previous versions yet: v{v} is the first release on this site.",
   "news.ph":"Email address",
   "news.thanks":"Thanks — you’re on the list. Newsletters come from info@morphlabaudio.com.", "news.needConsent":"Please tick the box to confirm you want the newsletter.",
@@ -440,6 +443,16 @@ function renderPlugin(){
       <div class="shead label"><span>${t("pg.olderLabel")}</span><span>${p.older.length}</span></div>
       <h2>${t("pg.olderH")}</h2>
       ${older ? `<p class="lede">${t("pg.olderLede")}</p><ul class="old-list">${older}</ul>` : `<p class="old-none">${t("pg.none", { v:p.version })}</p>`}
+    </div>
+  </section>
+  <section id="support">
+    <div class="shead label"><span>${t("s5.label").replace(/^\d+\s*—\s*/, "")}</span><span>Ko-fi</span></div>
+    <div class="support">
+      <div>
+        <h2>${t("s5.h")}</h2>
+        <p class="lede">${t("s5.lede")}</p>
+      </div>
+      <a class="btn solid kofi" href="${KOFI}" target="_blank" rel="noopener">${t("kofi.btn")}</a>
     </div>
   </section>`;
 }

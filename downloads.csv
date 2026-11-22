@@ -379,3 +379,23 @@ date,tag,plugin,version,published,mac,win,manual
 2026-11-21,rx92-v2.1,RX92,2.1,2026-10-14,9,8,4
 2026-11-21,rx92-v2.2,RX92,2.2,2026-10-16,22,17,3
 2026-11-21,rx92-v2.3,RX92,2.3,2026-10-31,30,16,2
+2026-11-22,morphalign-v3.1,MorPhalign,3.1,2026-10-14,8,3,4
+2026-11-22,morphalign-v3.2,MorPhalign,3.2,2026-10-17,18,18,5
+2026-11-22,morphalign-v3.3,MorPhalign,3.3,2026-10-31,11,10,2
+2026-11-22,morphase-v2.1,MorPhase,2.1,2026-10-14,18,17,3
+2026-11-22,morphase-v2.2,MorPhase,2.2,2026-10-31,13,7,2
+2026-11-22,morphlator-v2.2,MorPhlator,2.2,2026-10-14,25,22,3
+2026-11-22,morphlator-v2.3,MorPhlator,2.3,2026-10-31,9,9,2
+2026-11-22,morphclipper-v3.2,MorphClipper,3.2,2026-10-14,29,23,6
+2026-11-22,morphclipper-v3.3,MorphClipper,3.3,2026-10-31,3,2,2
+2026-11-22,morphclipper-v3.4,MorphClipper,3.4,2026-10-31,17,12,4
+2026-11-22,morphcontrolxl-v1.2,MorphControl XL,1.2,2026-10-14,10,16,4
+2026-11-22,morphdynamic-v2.6,MorphDynamic MB Transient,2.6,2026-10-14,5,3,3
+2026-11-22,morphdynamic-v2.7,MorphDynamic MB Transient,2.7,2026-10-15,20,19,2
+2026-11-22,morphdynamic-v2.8,MorphDynamic MB Transient,2.8,2026-10-30,15,10,3
+2026-11-22,morphtransient-v2.4,MorphTransient,2.4,2026-10-14,18,15,3
+2026-11-22,morphtransient-v2.5,MorphTransient,2.5,2026-10-31,11,9,5
+2026-11-22,rx92-v2.0,RX92,2.0,2026-10-14,2,2,2
+2026-11-22,rx92-v2.1,RX92,2.1,2026-10-14,9,8,4
+2026-11-22,rx92-v2.2,RX92,2.2,2026-10-16,22,17,3
+2026-11-22,rx92-v2.3,RX92,2.3,2026-10-31,30,16,2
